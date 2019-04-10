@@ -1,7 +1,7 @@
 import numpy as np
 import operator as op
 
-class KNN:
+class KNNC:
     def __init__(self, k, normType):
         self.k = 10
         self.normType = "Normalization"
