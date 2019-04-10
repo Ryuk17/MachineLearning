@@ -1,10 +1,12 @@
 import numpy as np
 import operator as op
 
-class KNNC:
-    def __init__(self, k, normType):
-        self.k = 10
+class KNNClassifier:
+    def __init__(self, k, normType="Normalization"):
+        self.k = k
         self.normType = "Normalization"
+        self.x_train = None
+        self.y_train = None
 
     '''
     Function:  Normalization
@@ -38,39 +40,46 @@ class KNNC:
         return standarddata
 
     '''
+    Function:  train
+    Description: train the model
+    Input:  trainData       dataType: ndarray   description: features
+            testData        dataType: ndarray   description: labels
+    Output: self            dataType: obj       description: 
+    '''
+    def train(self,trainData, trainLabel):
+        if self.normType == "Standardization":
+            trainData = self.Standardization(trainData)
+        else:
+            trainData = self.Normalization(trainData)
+        self.x_train = trainData
+        self.y_train = trainLabel
+        return self
+
+    '''
     Function:  predict
     Description: give the prediction for test data
     Input:  testData    dataType: ndarray   description: data for testing
-            trainData   dataType: ndarray   description: data for training
-            trainLabel  dataType: ndarray   description: labels of train data
-            k           dataType: int       description: select the first k distances
+            testLabel  dataType: ndarray   description: labels of train data
             normType    dataType: string    description: type of normalization, default:Normalization
             probability dataType: bool      description: if true return label and probability, else return label only
             showResult  dataType: bool      description: display the prediction result
     Output: results     dataType: ndarray   description: label or probability
     '''
-    def predict(self, testData, trainData, trainLabel, k, normType="Normalization", probability=True, showResult=True):
+    def predict(self, testData):
         # Normalization
-        if normType == "Standardization":
-            trainData = KNN.Standardization(self, trainData)
-            testData = KNN.Standardization(self, testData)
+        if self.normType == "Standardization":
+            testData = self.Standardization(testData)
+        else:
+            testData = self.Normalization(testData)
 
         test_num = testData.shape[0]
-        results = np.zeros([test_num, 2])
-        correct = 0
+        prediction = np.zeros([test_num, 1])
+        probability = np.zeros([test_num, 1])
         # predict each samples in test data
         for i in range(test_num):
-            results[i][0], results[i][1] = KNN.calcuateDistance(self, testData[i], trainData, trainLabel, k)
-            if results[i][0] == trainLabel[i]:
-                correct = correct + 1
+            prediction[i], probability[i] = self.calcuateDistance(testData[i], self.x_train, self.y_train, self.k)
 
-        if showResult:
-            print("The accuarcy is %f" % correct/test_num)
-
-        if probability:
-            return results
-        else:
-            return results[:0]
+        return prediction
 
     '''
     Function:  calcuateDistance
@@ -102,4 +111,15 @@ class KNNC:
         pro = prediction[0][1]/k
         return label, pro
 
-
+    '''
+    Function:  showDetectionResult
+    Description: show detection result
+    Input:  testData  dataType: ndarray   description: data for test
+            testLabel dataType: ndarray   description: labels of test data
+    Output: accuracy  dataType: float     description: detection accuarcy
+    '''
+    def showDetectionResult(self, testData, testLabel):
+        testLabel = np.expand_dims(testLabel,axis=1)
+        prediction = self.predict(testData)
+        accuarcy = sum(prediction == testLabel)/len(testLabel)
+        return accuarcy
