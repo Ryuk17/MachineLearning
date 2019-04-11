@@ -109,8 +109,8 @@ class KNNClassifier:
 
         prediction = sorted(labelCount.items(), key=op.itemgetter(1), reverse=True)
         label = prediction[0][0]
-        pro = prediction[0][1]/k
-        return label, pro
+        prop = prediction[0][1]/k
+        return label, prop
 
     '''
     Function:  showDetectionResult
