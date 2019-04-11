@@ -2,9 +2,9 @@ import numpy as np
 import operator as op
 
 class KNNClassifier:
-    def __init__(self, k, normType="Normalization"):
+    def __init__(self, k, norm_type="Normalization"):
         self.k = k
-        self.normType = "Normalization"
+        self.norm_type = "Normalization"
         self.x_train = None
         self.y_train = None
 
@@ -13,64 +13,64 @@ class KNNClassifier:
     Description: Normalize input data. For vector x, the normalization process is given by
                  normalization(x) = (x - min(x))/(max(x) - min(x))
     Input:  data        dataType: ndarray   description: input data
-    Output: normdata    dataType: ndarray   description: output data after normalization
+    Output: norm_data   dataType: ndarray   description: output data after normalization
     '''
     def Normalization(self, data):
         # get the max and min value of each column
-        minValue = data.min(axis=0)
-        maxValue = data.max(axis=0)
-        diff = maxValue - minValue
+        min_value = data.min(axis=0)
+        max_value = data.max(axis=0)
+        diff = max_value - min_value
         # normalization
-        mindata = np.tile(minValue, (data.shape[0], 1))
-        normdata = (data - mindata)/np.tile(diff, (data.shape[0], 1))
-        return normdata
+        min_data = np.tile(min_value, (data.shape[0], 1))
+        norm_data = (data - min_data)/np.tile(diff, (data.shape[0], 1))
+        return norm_data
 
     '''
     Function:  Standardization
     Description: Standardize input data. For vector x, the normalization process is given by
                  Standardization(x) = x - mean(x)/std(x)
     Input:  data            dataType: ndarray   description: input data
-    Output: standarddata    dataType: ndarray   description: output data after standardization
+    Output: standard_data   dataType: ndarray   description: output data after standardization
     '''
     def Standardization(self, data):
         # get the mean and the variance of each column
-        meanValue = data.mean(axis=0)
-        varValue = data.std(axis=0)
-        standarddata = (data - np.tile(meanValue, (data.shape[0], 1)))/np.tile(varValue, (data.shape[0], 1))
-        return standarddata
+        mean_value = data.mean(axis=0)
+        var_value = data.std(axis=0)
+        standard_data = (data - np.tile(mean_value, (data.shape[0], 1)))/np.tile(var_value, (data.shape[0], 1))
+        return standard_data
 
     '''
     Function:  train
     Description: train the model
-    Input:  trainData       dataType: ndarray   description: features
-            testData        dataType: ndarray   description: labels
-    Output: self            dataType: obj       description: 
+    Input:  train_data       dataType: ndarray   description: features
+            test_data        dataType: ndarray   description: labels
+    Output: self             dataType: obj       description: 
     '''
-    def train(self,trainData, trainLabel):
+    def train(self, train_data, train_label):
         if self.normType == "Standardization":
-            trainData = self.Standardization(trainData)
+            train_data = self.Standardization(train_data)
         else:
-            trainData = self.Normalization(trainData)
-        self.x_train = trainData
-        self.y_train = trainLabel
+            train_data = self.Normalization(train_data)
+        self.x_train = train_data
+        self.y_train = train_label
         return self
 
     '''
     Function:  predict
     Description: give the prediction for test data
-    Input:  testData    dataType: ndarray   description: data for testing
-            testLabel  dataType: ndarray   description: labels of train data
-            normType    dataType: string    description: type of normalization, default:Normalization
-            probability dataType: bool      description: if true return label and probability, else return label only
-            showResult  dataType: bool      description: display the prediction result
-    Output: results     dataType: ndarray   description: label or probability
+    Input:  test_data    dataType: ndarray   description: data for testing
+            test_abel    dataType: ndarray   description: labels of train data
+            norm_type    dataType: string    description: type of normalization, default:Normalization
+            probability  dataType: bool      description: if true return label and probability, else return label only
+            showResult   dataType: bool      description: display the prediction result
+    Output: results      dataType: ndarray   description: label or probability
     '''
-    def predict(self, testData):
+    def predict(self, test_data):
         # Normalization
         if self.normType == "Standardization":
-            testData = self.Standardization(testData)
+            testData = self.Standardization(test_data)
         else:
-            testData = self.Normalization(testData)
+            testData = self.Normalization(test_data)
 
         test_num = testData.shape[0]
         prediction = np.zeros([test_num, 1])
@@ -84,18 +84,17 @@ class KNNClassifier:
     '''
     Function:  calcuateDistance
     Description: calcuate the distance between input vector and train data
-    Input:  input      dataType: ndarray   description: input vector
-            trainData  dataType: ndarray   description: data for training
-            trainLabel dataType: ndarray   description: labels of train data
-            k          dataType: int       description: select the first k distances
-            type       dataType: string    description: select calcuation of distance(todo)
-    Output: pro        dataType: float     description: max probability of prediction 
-            label      dataType: int       description: prediction label of input vector
+    Input:  input       dataType: ndarray   description: input vector
+            traind_ata  dataType: ndarray   description: data for training
+            train_label dataType: ndarray   description: labels of train data
+            k           dataType: int       description: select the first k distances
+    Output: prop        dataType: float     description: max probability of prediction 
+            label       dataType: int       description: prediction label of input vector
     '''
-    def calcuateDistance(self, input, trainData, trainLabel, k):
-        train_num = trainData.shape[0]
+    def calcuateDistance(self, input, train_data, train_label, k):
+        train_num = train_data.shape[0]
         # calcuate the distances
-        distances = np.tile(input, (train_num, 1)) - trainData
+        distances = np.tile(input, (train_num, 1)) - train_data
         distances = distances**2
         distances = distances.sum(axis=1)
         distances = distances**0.5
@@ -104,7 +103,7 @@ class KNNClassifier:
         disIndex = distances.argsort()
         labelCount = {}
         for i in range(k):
-            label = trainLabel[disIndex[i]]
+            label = train_label[disIndex[i]]
             labelCount[label] = labelCount.get(label, 0) + 1
 
         prediction = sorted(labelCount.items(), key=op.itemgetter(1), reverse=True)
@@ -115,12 +114,12 @@ class KNNClassifier:
     '''
     Function:  showDetectionResult
     Description: show detection result
-    Input:  testData  dataType: ndarray   description: data for test
-            testLabel dataType: ndarray   description: labels of test data
-    Output: accuracy  dataType: float     description: detection accuarcy
+    Input:  test_data  dataType: ndarray   description: data for test
+            test_label dataType: ndarray   description: labels of test data
+    Output: accuracy   dataType: float     description: detection accuarcy
     '''
-    def showDetectionResult(self, testData, testLabel):
-        testLabel = np.expand_dims(testLabel,axis=1)
-        prediction = self.predict(testData)
-        accuarcy = sum(prediction == testLabel)/len(testLabel)
+    def showDetectionResult(self, test_data, test_label):
+        test_label = np.expand_dims(test_label, axis=1)
+        prediction = self.predict(test_data)
+        accuarcy = sum(prediction == test_label)/len(test_label)
         return accuarcy
