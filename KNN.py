@@ -88,7 +88,7 @@ class KNNClassifier:
             traind_ata  dataType: ndarray   description: data for training
             train_label dataType: ndarray   description: labels of train data
             k           dataType: int       description: select the first k distances
-    Output: prop        dataType: float     description: max probability of prediction 
+    Output: prob        dataType: float     description: max probability of prediction 
             label       dataType: int       description: prediction label of input vector
     '''
     def calcuateDistance(self, input, train_data, train_label, k):
@@ -108,8 +108,8 @@ class KNNClassifier:
 
         prediction = sorted(labelCount.items(), key=op.itemgetter(1), reverse=True)
         label = prediction[0][0]
-        prop = prediction[0][1]/k
-        return label, prop
+        prob = prediction[0][1]/k
+        return label, prob
 
     '''
     Function:  showDetectionResult
