@@ -88,6 +88,7 @@ class KNNClassifier:
             trainData  dataType: ndarray   description: data for training
             trainLabel dataType: ndarray   description: labels of train data
             k          dataType: int       description: select the first k distances
+            type       dataType: string    description: select calcuation of distance(todo)
     Output: pro        dataType: float     description: max probability of prediction 
             label      dataType: int       description: prediction label of input vector
     '''
