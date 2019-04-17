@@ -2,6 +2,7 @@
 Machine learning algorithm by myself
 ## What's in it?
 1. [KNN](https://github.com/DandelionLau/MachineLearning/blob/master/KNN.py)
+2. [DecisionTree](https://github.com/DandelionLau/MachineLearning/blob/master/DecisionTree.py)
 
 ## Dependences
 1. Install [Python 3.6](https://www.python.org/)
