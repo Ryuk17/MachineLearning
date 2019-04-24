@@ -1,5 +1,5 @@
 # MachineLearning
-Machine learning algorithm by myself
+Machine learning algorithm written by myself with Python 3.6
 ## What's in it?
 1. [KNN](https://github.com/DandelionLau/MachineLearning/blob/master/KNN.py)
 2. [DecisionTree](https://github.com/DandelionLau/MachineLearning/blob/master/DecisionTree.py)
