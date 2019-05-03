@@ -1,3 +1,11 @@
+"""
+@Filename:       NaiveBayes.py
+@Author:         Danc1elion
+@Date:           2019-05-02
+@Update Date:    2019-05-03
+@Description:    Implement of naive Bayes
+"""
+
 import numpy as np
 import operator as op
 import preProcess
