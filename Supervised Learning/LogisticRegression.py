@@ -1,7 +1,7 @@
 """
 @Filename:       LogisticRegression.py
 @Author:         Danc1elion
-@Date:           2019-04-30
+@Create Date:    2019-04-30
 @Update Date:    2019-05-03
 @Description:    Implement of logistic regression
 """
