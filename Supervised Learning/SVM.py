@@ -1,3 +1,11 @@
+"""
+@Filename:       SVM.py
+@Author:         Danc1elion
+@Create Date:    2019-04-29
+@Update Date:    2019-05-03
+@Description:    Implement of SVM
+"""
+
 import numpy as np
 import preProcess
 import pickle
