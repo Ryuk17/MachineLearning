@@ -12,6 +12,7 @@ Machine learning algorithm written by myself with Python 3.6
 
 + **Unsupervised Learning**
 + **Ensemble Learning**
+1. [AdaBoost](https://github.com/DandelionLau/MachineLearning/tree/master/Ensemble%20Learning)
 
 ## Notes
 1. The detection-performance comparison codes  between this [repository](https://github.com/DandelionLau/MachineLearning) and [sklearn](https://scikit-learn.org/stable/) are in [ModelTest](https://github.com/DandelionLau/MachineLearning/tree/master/ModelTest) 
@@ -25,7 +26,7 @@ Machine learning algorithm written by myself with Python 3.6
 2. [统计学习方法](https://baike.baidu.com/item/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/10430179)
 
 ## Tutorial
-中文教程:[从零实现机器学习算法](https://zhuanlan.zhihu.com/easymachinelearning)
+中文教程: [从零实现机器学习算法](https://zhuanlan.zhihu.com/easymachinelearning)
 
 ## Dependences
 1. Install [Python 3.6](https://www.python.org/)
