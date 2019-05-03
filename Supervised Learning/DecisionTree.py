@@ -1,3 +1,11 @@
+"""
+@Filename:       DecisionTree.py
+@Author:         Danc1elion
+@Date:           2019-04-22
+@Update Date:    2019-05-03
+@Description:    Implement of decision tree
+"""
+
 import numpy as np
 import operator as op
 import preProcess
