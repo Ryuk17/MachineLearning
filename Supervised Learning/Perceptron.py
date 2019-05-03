@@ -1,3 +1,11 @@
+"""
+@Filename:       Perceptron.py
+@Author:         Danc1elion
+@Create Date:    2019-04-30
+@Update Date:    2019-05-03
+@Description:    Implement of perceptron.py
+"""
+
 import numpy as np
 import preProcess
 import pickle
