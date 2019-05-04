@@ -33,3 +33,4 @@ English Turorials: [Step-by-Step Guide To Implement Machine Learning]()
 ## Dependences
 1. Install [Python 3.6](https://www.python.org/)
 2. Install [NumPy](http://www.numpy.org/)
+2. Install [Sklearn](https://scikit-learn.org/)
