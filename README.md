@@ -13,13 +13,14 @@ Machine learning algorithm written by myself with Python 3.6
 + **Unsupervised Learning**
 + **Ensemble Learning**
 1. [AdaBoost](https://github.com/DandelionLau/MachineLearning/tree/master/Ensemble%20Learning)
+2. [Blending](https://github.com/DandelionLau/MachineLearning/blob/master/Ensemble%20Learning/Blending.py)
 
 ## Notes
 1. The detection-performance comparison codes  between this [MachineLearning](https://github.com/DandelionLau/MachineLearning) and [Sklearn](https://scikit-learn.org/stable/) are in [ModelTest](https://github.com/DandelionLau/MachineLearning/tree/master/ModelTest) 
 2. dataset1 is for the test of [KNN](https://github.com/DandelionLau/MachineLearning/blob/master/KNN.py), [DecisionTree](https://github.com/DandelionLau/MachineLearning/blob/master/DecisionTree.py), [NaiveBayes](https://github.com/DandelionLau/MachineLearning/blob/master/NaiveBayes.py)
 3. dataset2 is for the test of [SVM](https://github.com/DandelionLau/MachineLearning/blob/master/SVM.py), [AdaBoost](https://github.com/DandelionLau/MachineLearning/tree/master/Ensemble%20Learning)
 4. dataset3 is for the test of  [LogisticRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LogisticRegression.py),
-[Perceptron](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/Perceptron.py)
+[Perceptron](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/Perceptron.py),[Blending](https://github.com/DandelionLau/MachineLearning/blob/master/Ensemble%20Learning/Blending.py)
 
 ## References
 1. [Machine Learning IN ACTION](https://www.manning.com/books/machine-learning-in-action)
@@ -27,7 +28,7 @@ Machine learning algorithm written by myself with Python 3.6
 
 ## Tutorial
 中文教程: [从零实现机器学习算法](https://zhuanlan.zhihu.com/easymachinelearning)
-
+English Turorials: [Step-by-Step Guide To Implement Machine Learning]()
 ## Dependences
 1. Install [Python 3.6](https://www.python.org/)
 2. Install [NumPy](http://www.numpy.org/)
