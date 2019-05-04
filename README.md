@@ -17,7 +17,7 @@ Machine learning algorithm written by myself with Python 3.6
 ## Notes
 1. The detection-performance comparison codes  between this [repository](https://github.com/DandelionLau/MachineLearning) and [sklearn](https://scikit-learn.org/stable/) are in [ModelTest](https://github.com/DandelionLau/MachineLearning/tree/master/ModelTest) 
 2. dataset1 is for the test of [KNN](https://github.com/DandelionLau/MachineLearning/blob/master/KNN.py), [DecisionTree](https://github.com/DandelionLau/MachineLearning/blob/master/DecisionTree.py), [NaiveBayes](https://github.com/DandelionLau/MachineLearning/blob/master/NaiveBayes.py)
-3. dataset2 is for the test of [SVM](https://github.com/DandelionLau/MachineLearning/blob/master/SVM.py)
+3. dataset2 is for the test of [SVM](https://github.com/DandelionLau/MachineLearning/blob/master/SVM.py), [AdaBoost](https://github.com/DandelionLau/MachineLearning/tree/master/Ensemble%20Learning)
 4. dataset3 is for the test of  [LogisticRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LogisticRegression.py),
 [Perceptron](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/Perceptron.py)
 
