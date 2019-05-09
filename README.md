@@ -27,6 +27,7 @@ Machine learning algorithm written by myself with Python 3.6
 ## References
 1. [Machine Learning IN ACTION](https://www.manning.com/books/machine-learning-in-action)
 2. [统计学习方法](https://baike.baidu.com/item/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/10430179)
+3. [KAGGLE ENSEMBLING GUIDE](https://mlwave.com/kaggle-ensembling-guide/)
 
 ## Tutorial
 中文教程: [从零实现机器学习算法](https://zhuanlan.zhihu.com/easymachinelearning)
