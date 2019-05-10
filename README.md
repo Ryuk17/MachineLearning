@@ -8,6 +8,7 @@ Machine learning algorithm written by myself with Python 3.6
 4. [SVM](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/SVM.py)
 5. [LogisticRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/LogisticRegression.py)
 6. [Perceptron](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/Perceptron.py)
+7. [LinearRegression]()
 
 
 + **Unsupervised Learning**
