@@ -1,5 +1,5 @@
 """
-@ Filename:       LinearRegression.py
+@ Filename:       Regression.py
 @ Author:         Danc1elion
 @ Create Date:    2019-05-05
 @ Update Date:    2019-05-06
@@ -11,7 +11,7 @@ import pickle
 import random
 import matplotlib.pyplot as plt
 
-class Regression:
+class RegressionAnalysis:
     def __init__(self, norm_type="Normalization",regression_type="Standard", k=1.0, lamda=0.2, learning_rate=0.01, iterations=100):
         self.norm_type = norm_type
         self.regression_type = regression_type
