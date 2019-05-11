@@ -8,7 +8,7 @@ Machine learning algorithm written by myself with Python 3.6
 4. [SVM](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/SVM.py)
 5. [LogisticRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/LogisticRegression.py)
 6. [Perceptron](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/Perceptron.py)
-7. [LinearRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/LinearRegression.py)
+7. [RegressionAnalysis](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/RegressionAnalysis.py)
 
 
 + **Unsupervised Learning**
@@ -23,7 +23,7 @@ Machine learning algorithm written by myself with Python 3.6
 3. dataset2 is for the test of [SVM](https://github.com/DandelionLau/MachineLearning/blob/master/SVM.py), [AdaBoost](https://github.com/DandelionLau/MachineLearning/tree/master/Ensemble%20Learning)
 4. dataset3 is for the test of  [LogisticRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LogisticRegression.py),
 [Perceptron](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/Perceptron.py),[Blending](https://github.com/DandelionLau/MachineLearning/blob/master/Ensemble%20Learning/Blending.py),[Stacking](https://github.com/DandelionLau/MachineLearning/blob/master/Ensemble%20Learning/Stacking.py)
-5. dataset4 is for the test of [LinearRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/LinearRegression.py)
+5. dataset4 is for the test of [RegressionAnalysis](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/RegressionAnalysis.py)
 6. If the results do not meet expectations, please run the programm several times beacuse there exists randomness in programms.
 
 ## References
