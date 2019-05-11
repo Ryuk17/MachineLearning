@@ -11,7 +11,7 @@ import pickle
 import random
 import matplotlib.pyplot as plt
 
-class RegressionAnalysis:
+class Regression:
     def __init__(self, norm_type="Normalization",regression_type="Standard", k=1.0, lamda=0.2, learning_rate=0.01, iterations=100):
         self.norm_type = norm_type
         self.regression_type = regression_type
