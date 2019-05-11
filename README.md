@@ -19,12 +19,7 @@ Machine learning algorithm written by myself with Python 3.6
 
 ## Notes
 1. The detection-performance comparison codes  between this [MachineLearning](https://github.com/DandelionLau/MachineLearning) and [Sklearn](https://scikit-learn.org/stable/) are in [ModelTest](https://github.com/DandelionLau/MachineLearning/tree/master/ModelTest) 
-2. dataset1 is for the test of [KNN](https://github.com/DandelionLau/MachineLearning/blob/master/KNN.py), [DecisionTree](https://github.com/DandelionLau/MachineLearning/blob/master/DecisionTree.py), [NaiveBayes](https://github.com/DandelionLau/MachineLearning/blob/master/NaiveBayes.py)
-3. dataset2 is for the test of [SVM](https://github.com/DandelionLau/MachineLearning/blob/master/SVM.py), [AdaBoost](https://github.com/DandelionLau/MachineLearning/tree/master/Ensemble%20Learning)
-4. dataset3 is for the test of  [LogisticRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LogisticRegression.py),
-[Perceptron](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/Perceptron.py),[Blending](https://github.com/DandelionLau/MachineLearning/blob/master/Ensemble%20Learning/Blending.py),[Stacking](https://github.com/DandelionLau/MachineLearning/blob/master/Ensemble%20Learning/Stacking.py)
-5. dataset4 is for the test of [LinearRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/LinearRegression.py)
-6. If the results do not meet expectations, please run the programm several times beacuse there exists randomness in programms.
+
 
 ## References
 1. [Machine Learning IN ACTION](https://www.manning.com/books/machine-learning-in-action)
