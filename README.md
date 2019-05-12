@@ -9,6 +9,7 @@ Machine learning algorithm written by myself with Python 3.6
 5. [LogisticRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/LogisticRegression.py)
 6. [Perceptron](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/Perceptron.py)
 7. [LinearRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/LinearRegression.py)
+8. [TreeRegression]()
 
 
 + **Unsupervised Learning**
