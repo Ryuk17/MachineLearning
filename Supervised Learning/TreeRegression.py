@@ -2,7 +2,7 @@
 @ Filename:       TreeRegression.py
 @ Author:         Danc1elion
 @ Create Date:    2019-05-11
-@ Update Date:    2019-05-11
+@ Update Date:    2019-05-13
 @ Description:    Implement TreeRegression
 """
 
@@ -21,8 +21,8 @@ class treeNode():
         self.left_tree = left_tree
 
 
-class Regression:
-    def __init__(self, norm_type="Normalization",iterations=100, error_threshold=0.01, N=4):
+class treeRegression:
+    def __init__(self, norm_type="Normalization",iterations=100, error_threshold=1, N=4):
         self.norm_type = norm_type
         self.iterations = iterations
         self.error_threshold = error_threshold  # the threshold of error
@@ -47,11 +47,9 @@ class Regression:
         for temp in data:
             if temp[index] >= value:
                 # delete this feature
-                new_feature = np.delete(temp, index)
-                right_set.append(new_feature)
+                right_set.append(temp)
             else:
-                new_feature = np.delete(temp, index)
-                left_set.append(new_feature)
+                left_set.append(temp)
         return np.array(left_set), np.array(right_set)
 
     '''
@@ -61,7 +59,7 @@ class Regression:
        Output: variance        dataType: ndarray      description:  variance 
        '''
     def getVariance(self, data):
-        variance = np.var(data[:, -1])
+        variance = np.var(data)
         return variance*len(data)
 
     '''
@@ -71,7 +69,7 @@ class Regression:
        Output: mean            dataType: ndarray      description:  mean
        '''
     def getMean(self, data):
-        mean = np.var(data[:, -1])
+        mean = np.mean(data)
         return mean
 
     '''
@@ -81,8 +79,9 @@ class Regression:
        Output: w             dataType: ndarray      description: weights
        '''
     def createRegressionTree(self, data):
+        # if there is no feature
         if len(data) == 0:
-            self.tree_node = treeNode()
+            self.tree_node = treeNode(result=self.getMean(data[:, -1]))
             return self.tree_node
 
         sample_num, feature_dim = np.shape(data)
@@ -105,8 +104,11 @@ class Regression:
                     best_error = new_error
                     best_set = (left_set, right_set)
 
+        if best_set is None:
+            self.tree_node = treeNode(result=self.getMean(data[:, -1]))
+            return self.tree_node
         # if the descent of error is small enough, return the mean of the data
-        if abs(initial_error - best_error) < self.error_threshold:
+        elif abs(initial_error - best_error) < self.error_threshold:
             self.tree_node = treeNode(result=self.getMean(data[:, -1]))
             return self.tree_node
         # if the split data is small enough, return the mean of the data
@@ -126,18 +128,34 @@ class Regression:
                train_label      dataType: ndarray   description: labels
        Output: self             dataType: obj       description: the trained model
        '''
-    def train(self, train_data, train_label):
-        if self.norm_type == "Standardization":
-            train_data = preProcess.Standardization(train_data)
-        else:
-            train_data = preProcess.Normalization(train_data)
+    def train(self, train_data, train_label, pruning=False, val_data=None, val_label=None):
+        # if self.norm_type == "Standardization":
+        #     train_data = preProcess.Standardization(train_data)
+        # else:
+        #     train_data = preProcess.Normalization(train_data)
 
         train_label = np.expand_dims(train_label, axis=1)
         data = np.hstack([train_data, train_label])
 
         self.tree_node = self.createRegressionTree(data)
-        # self.printTree(self.tree_node)
+        #self.printTree(self.tree_node)
         return self
+
+    '''
+       Function:  printTree
+       Description: show the structure of the decision tree
+       Input:  tree        dataType: DecisionNode    description: decision tree
+    '''
+    def printTree(self, tree):
+        # leaf node
+        if tree.result != None:
+            print(str(tree.result))
+        else:
+            # print condition
+            print(str(tree.index) + ":" + str(tree.value))
+            # print subtree
+            print("R->", self.printTree(tree.right_tree))
+            print("L->", self.printTree(tree.left_tree))
 
     '''
      Function:  predict
@@ -148,23 +166,21 @@ class Regression:
      '''
     def predict(self, test_data, prob="False"):
         # Normalization
-        if self.norm_type == "Standardization":
-            test_data = preProcess.Standardization(test_data)
-        else:
-            test_data = preProcess.Normalization(test_data)
+        # if self.norm_type == "Standardization":
+        #     test_data = preProcess.Standardization(test_data)
+        # else:
+        #     test_data = preProcess.Normalization(test_data)
 
         test_num = test_data.shape[0]
         prediction = np.zeros([test_num, 1])
         probability = np.zeros([test_num, 1])
         for i in range(test_num):
-            result = self.classify(test_data[i, :], self.tree_node)
+            prediction[i] = self.classify(test_data[i, :], self.tree_node)
             # probability[i] = result[0][1]/(result[0][1] + result[1][1])
         self.prediction = prediction
         self.probability = probability
-        if prob:
-            return probability
-        else:
-            return prediction
+
+        return prediction
 
     '''
           Function:  classify
@@ -173,8 +189,8 @@ class Regression:
           Output: label       dataType: ndarray     description: the prediction results of input
        '''
     def classify(self, sample, tree):
-        if tree.results is not None:
-            return tree.results
+        if tree.result is not None:
+            return tree.result
         else:
             value = sample[tree.index]
             if value >= tree.value:
