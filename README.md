@@ -12,11 +12,14 @@ Machine learning algorithm written by myself with Python 3.6
 
 
 + **Unsupervised Learning**
+1. [Cluster]()
 
 + **Ensemble Learning**
 1. [AdaBoost](https://github.com/DandelionLau/MachineLearning/tree/master/Ensemble%20Learning)
 2. [Blending](https://github.com/DandelionLau/MachineLearning/blob/master/Ensemble%20Learning/Blending.py)
 3. [Stacking](https://github.com/DandelionLau/MachineLearning/blob/master/Ensemble%20Learning/Stacking.py)
+
+** Others**
 
 ## Notes
 1. The detection-performance comparison codes  between this [MachineLearning](https://github.com/DandelionLau/MachineLearning) and [Sklearn](https://scikit-learn.org/stable/) are in [ModelTest](https://github.com/DandelionLau/MachineLearning/tree/master/ModelTest) 
