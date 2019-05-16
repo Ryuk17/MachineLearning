@@ -19,7 +19,7 @@ Machine learning algorithm written by myself with Python 3.6
 2. [Blending](https://github.com/DandelionLau/MachineLearning/blob/master/Ensemble%20Learning/Blending.py)
 3. [Stacking](https://github.com/DandelionLau/MachineLearning/blob/master/Ensemble%20Learning/Stacking.py)
 
-** Others**
++ **Others**
 
 ## Notes
 1. The detection-performance comparison codes  between this [MachineLearning](https://github.com/DandelionLau/MachineLearning) and [Sklearn](https://scikit-learn.org/stable/) are in [ModelTest](https://github.com/DandelionLau/MachineLearning/tree/master/ModelTest) 
