@@ -3,13 +3,12 @@ Machine learning algorithm written by myself with Python 3.6
 ## What's in it?
 + **Supervised Learning**
 1. [KNN](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/KNN.py)
-2. [DecisionTree](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/DecisionTree.py)
-3. [NaiveBayes](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/NaiveBayes.py)
-4. [SVM](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/SVM.py)
-5. [LogisticRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/LogisticRegression.py)
-6. [Perceptron](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/Perceptron.py)
-7. [LinearRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/LinearRegression.py)
-8. [TreeRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/TreeRegression.py)
+2. [NaiveBayes](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/NaiveBayes.py)
+3. [SVM](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/SVM.py)
+4. [LogisticRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/LogisticRegression.py)
+5. [Perceptron](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/Perceptron.py)
+6. [LinearRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/LinearRegression.py)
+7. [CART](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/Tree.py)
 
 
 + **Unsupervised Learning**
