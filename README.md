@@ -8,11 +8,12 @@ Machine learning algorithm written by myself with Python 3.6
 4. [LogisticRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/LogisticRegression.py)
 5. [Perceptron](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/Perceptron.py)
 6. [LinearRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/LinearRegression.py)
-7. [CART](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/Tree.py)
+7. [DecisionTree](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/Tree.py)
+8. [TreeRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/Tree.py)
 
 
 + **Unsupervised Learning**
-1. [Cluster]()
+1. [KMeans]()
 
 + **Ensemble Learning**
 1. [AdaBoost](https://github.com/DandelionLau/MachineLearning/tree/master/Ensemble%20Learning)
@@ -21,8 +22,6 @@ Machine learning algorithm written by myself with Python 3.6
 
 + **Others**
 
-## Notes
-1. The detection-performance comparison codes  between this [MachineLearning](https://github.com/DandelionLau/MachineLearning) and [Sklearn](https://scikit-learn.org/stable/) are in [ModelTest](https://github.com/DandelionLau/MachineLearning/tree/master/ModelTest) 
 
 
 ## Main References
