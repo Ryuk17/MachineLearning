@@ -2,7 +2,7 @@
 @ Filename:       Cluster.py
 @ Author:         Danc1elion
 @ Create Date:    2019-05-15   
-@ Update Date:    2019-05-20
+@ Update Date:    2019-05-23
 @ Description:    Implement Cluster
 """
 import sys
@@ -11,6 +11,7 @@ import preProcess
 import pickle
 import random
 import matplotlib.pyplot as plt
+import operator as op
 
 class KMeans:
     def __init__(self, norm_type="Normalization", k=4, distance_type="Euclidean", cluster_type="KMeans++"):
@@ -273,7 +274,7 @@ class KMeans:
 
 
 class DBSCAN:
-    def __init__(self, norm_type="Normalization", distance_type="Euclidean", eps=0.5, m=5):
+    def __init__(self, norm_type="Normalization", distance_type="Euclidean", eps=0.1, m=10):
         self.norm_type = norm_type
         self.distance_type = distance_type
         self.eps = eps          # neighbor
@@ -289,9 +290,9 @@ class DBSCAN:
       Output: d       dataType: float     description: distance between input vectors
       '''
     def calculateDistance(self, x1, x2):
-        d = 0
         if self.distance_type == "Euclidean":
-            d = np.sqrt(np.power(np.sum(x1 - x2), 2))
+            d = np.sqrt(np.sum(np.power(x1 - x2, 2), axis=1))
+            #d = np.sqrt(np.sum(np.power(x1 - x2, 2)))
         elif self.distance_type == "Cosine":
             d = np.dot(x1, x2)/(np.linalg.norm(x1)*np.linalg.norm(x2))
         elif self.distance_type == "Manhattan":
@@ -302,24 +303,6 @@ class DBSCAN:
         return d
 
     '''
-      Function:  neighborQuery
-      Description: create neighbor, if the sample is not in a neighbor, add it to a neighbor
-      Input:  train_data      dataType: ndarray   description: features
-              center          dataType: ndarray   description: the center points
-      Output: neighbor        dataType: ndarray   description: the center's neighbors 
-              index           dataType: ndarray   description: the center's index
-    '''
-    def neighborQuery(self, train_data, center):
-        index = []
-        neighbor = []
-        sample_num = len(train_data)
-        for i in range(sample_num):
-            if self.calculateDistance(center, train_data[i, :]) <= self.eps:  # the sample in center's neighbor
-                neighbor.append(train_data[i, :])
-                index.append(i)
-        return index, neighbor
-
-    '''
       Function:  cluster
       Description: train the model
       Input:  train_data      dataType: ndarray   description: features
@@ -327,55 +310,66 @@ class DBSCAN:
               distances       dataType: ndarray   description: distance between sample and its corresponding cluster(cluster, distance)
       '''
     def cluster(self, train_data, display="True"):
-        if self.norm_type == "Standardization":
-            train_data = preProcess.Standardization(train_data)
-        else:
-            train_data = preProcess.Normalization(train_data)
+        # if self.norm_type == "Standardization":
+        #     train_data = preProcess.Standardization(train_data)
+        # else:
+        #     train_data = preProcess.Normalization(train_data)
 
+        # get the initial cluster center
+        centers = self.getCenters(train_data)
+        label = {}
         sample_num = len(train_data)
-        label = -np.ones([sample_num])
-        center_flag = np.zeros([sample_num])           # indicate samples which are cluster center
-        center_index = []                              # cluster center index
-        C = 0
+        initial_centers = centers.copy()
 
-        # start clustering
-        for i in range(sample_num):
-            temp_neighbor = []
-            if label[i] != -1:                         # if sample i has been clustered, stop this iteration
-                continue
-            index1, neighbor1 = self.neighborQuery(train_data, train_data[i, :])
-            if len(neighbor1) < self.m:
-                label[i] = 0                           # sample i is noise point
-                continue                              # stop this iteration
+        k = 0
+        unvisited = list(range(sample_num))         # samples which are not visited
+        while len(centers) > 0:
+            visited = []
+            visited.extend(unvisited)
+            cores = list(centers.keys())
+            # choose a random cluster center
+            randNum = np.random.randint(0, len(cores))
+            core = cores[randNum]
+            core_neighbor = []                              # samples in core's neighbor
+            core_neighbor.append(core)
+            unvisited.remove(core)
+            # merege the samples density-connectivity
+            while len(core_neighbor) > 0:
+                Q = core_neighbor[0]
+                del core_neighbor[0]
+                if Q in initial_centers.keys():
+                    diff = [sample for sample in initial_centers[Q] if sample in unvisited]
+                    core_neighbor.extend(diff)
+                    unvisited = [sample for sample in unvisited if sample not in diff]
+            k += 1
+            label[k] = [val for val in visited if val not in unvisited]
+            for index in label[k]:
+                if index in centers.keys():
+                    del centers[index]
 
-            C = C + 1
-            label[i] = C
-            center_flag[i] = 1
-            temp_neighbor.append(neighbor1)
-
-            # all the samples in i-th neighbor belong to label C
-            center_index = index1
-            j = 0
-            while j < len(center_index):
-                loc = center_index[j]
-                #print(center_index[j])
-                if center_flag[j] != 1:               # samples in i-th sample's neighbor but not cluster center
-                    if label[loc] == 0:
-                        label[loc] = C
-                    if label[loc] != -1:
-                        j = j + 1
-                        continue
-                    label[loc] = C
-                    index2, neighbor2 = self.neighborQuery(train_data, train_data[loc, :])
-                    if len(neighbor2) >= self.m:
-                        center_index = list(set(index1).union(set(index2)))   # merge the cluster centers which are directly reachable
-                        center_flag[loc] = 1     # if there are more than m samples in j-th neighbor, add j-th sample as a cluster center
-                j = j + 1
-        self.label = label
-
+        labels = np.zeros([sample_num])
+        for i in range(1, len(label)):
+            index = label[i]
+            labels[index] = i
+        self.label = labels
         if display:
             self.plotResult(train_data)
         return label
+
+    '''
+         Function:  getCenters
+         Description: get initial cluster centers
+         Input:  train_data      dataType: ndarray      description: training set
+         Output: neighbor        dataType: dict         description: cluster and its neighbor (center, neighbor)
+         '''
+    def getCenters(self, train_data):
+        neighbor = {}
+        for i in range(len(train_data)):
+            distance = self.calculateDistance(train_data[i], train_data)
+            index = np.where(distance <= self.eps)[0]
+            if len(index) > self.m:
+                neighbor[i] = index
+        return neighbor
 
     '''
     Function:  plotResult
