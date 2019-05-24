@@ -2,7 +2,7 @@
 @Filename:       AdaptiveBoost.py
 @Author:         Danc1elion
 @Create Date:    2019-05-03
-@Update Date:    2019-05-03
+@Update Date:    2019-05-24
 @Description:    Implement of Adaptive Boosting
 """
 
@@ -10,17 +10,27 @@ import numpy as np
 import preProcess
 import pickle
 import random
-import SVM
+import SVM, KNN, DecisionTree,Logistic, Perceptron
 import math
 
 class Adaboost:
     def __init__(self, norm_type="Normalization", iterations=5, base_classifier="SVM"):
         self.iterations = iterations
         self.norm_type = norm_type
-        self.base_classifier = SVM.SVMClassifier()
         self.prediction = None
         self.probability = None
         self.classifier_set = None
+
+        if base_classifier == "SVM":
+            self.base_classifier = SVM.SVMClassifier()
+        elif base_classifier == "KNN":
+            self.base_classifier = KNN.KNNClassifier()
+        elif base_classifier == "DecisionTree":
+            self.base_classifier = DecisionTree.DecisionTreeClassifier()
+        elif base_classifier == "Logistic":
+            self.base_classifier = Logistic.LogisticRegressionClassifier()
+        elif base_classifier == "Perceptron":
+            self.base_classifier = Perceptron.PerceptronClassifier()
 
     '''
        Function:  baseClassifier
@@ -170,3 +180,4 @@ class Adaboost:
         f = open(filename)
         self.classifier_set = pickle.load(f)
         return self
+
