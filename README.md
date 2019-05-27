@@ -2,30 +2,30 @@
 Machine learning algorithm written by myself with Python 3.6
 ## What's in it?
 + **Supervised Learning**
-1. [KNN](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/KNN.py)
-2. [NaiveBayes](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/NaiveBayes.py)
-3. [SVM](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/SVM.py)
-4. [LogisticRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/LogisticRegression.py)
-5. [Perceptron](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/Perceptron.py)
-6. [LinearRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/LinearRegression.py)
-7. [DecisionTree](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/Tree.py)
-8. [TreeRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Supervised%20Learning/Tree.py)
+1. [KNN](https://github.com/DandelionLau/MachineLearning/blob/master/KNN.py)
+2. [NaiveBayes](https://github.com/DandelionLau/MachineLearning/blob/master/NaiveBayes.py)
+3. [SVM](https://github.com/DandelionLau/MachineLearning/blob/master/SVM.py)
+4. [LogisticRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LogisticRegression.py)
+5. [Perceptron](https://github.com/DandelionLau/MachineLearning/blob/master/Perceptron.py)
+6. [LinearRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)
+7. [DecisionTree](https://github.com/DandelionLau/MachineLearning/blob/master/Tree.py)
+8. [TreeRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Tree.py)
 
 
 + **Unsupervised Learning**
-1. [KMeans](https://github.com/DandelionLau/MachineLearning/blob/master/Unsupervised%20Learning/Cluster.py)
-2. [DBSCAN](https://github.com/DandelionLau/MachineLearning/blob/master/Unsupervised%20Learning/Cluster.py)
+1. [KMeans](https://github.com/DandelionLau/MachineLearning/blob/master/Cluster.py)
+2. [DBSCAN](https://github.com/DandelionLau/MachineLearning/blob/master/Cluster.py)
 3. [Apriori]()
 
 + **Ensemble Learning**
-1. [AdaBoost](https://github.com/DandelionLau/MachineLearning/tree/master/Ensemble%20Learning)
-2. [Blending](https://github.com/DandelionLau/MachineLearning/blob/master/Ensemble%20Learning/Blending.py)
-3. [Stacking](https://github.com/DandelionLau/MachineLearning/blob/master/Ensemble%20Learning/Stacking.py)
+1. [AdaBoost](https://github.com/DandelionLau/MachineLearning/tree/master/AdaBoost.py)
+2. [Blending](https://github.com/DandelionLau/MachineLearning/blob/master/Blending.py)
+3. [Stacking](https://github.com/DandelionLau/MachineLearning/blob/master/Stacking.py)
 
 + **Others**
 
 
-## Tutorial
+## Tutorials
 中文教程: [从零实现机器学习算法](https://zhuanlan.zhihu.com/easymachinelearning)  
 English Turorials: [Step-by-Step Guide To Implement Machine Learning](https://www.codeproject.com/script/Articles/MemberArticles.aspx?amid=14354398)
 
