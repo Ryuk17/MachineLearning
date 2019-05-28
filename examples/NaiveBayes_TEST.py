@@ -11,8 +11,8 @@ import numpy as np
 import pandas as pd
 import time
 
-trainData = pd.read_table('./dataset1/train.txt',header=None,encoding='gb2312',delim_whitespace=True)
-testData = pd.read_table('./dataset1/test.txt',header=None,encoding='gb2312',delim_whitespace=True)
+trainData = pd.read_table('../dataset1/train.txt',header=None,encoding='gb2312',delim_whitespace=True)
+testData = pd.read_table('../dataset1/test.txt',header=None,encoding='gb2312',delim_whitespace=True)
 trainLabel = np.array(trainData.pop(3))
 trainData = np.array(trainData)
 testLabel = np.array(testData.pop(3))
