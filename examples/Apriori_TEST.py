@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 import time
 
-trainData = pd.read_table('./dataset/dataset7/train.txt', header=None,encoding='gb2312', delim_whitespace=True)
+trainData = pd.read_table('../dataset/dataset7/train.txt', header=None,encoding='gb2312', delim_whitespace=True)
 trainData = np.array(trainData)
 
 time_start1 = time.time()
