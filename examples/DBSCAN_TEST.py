@@ -30,13 +30,13 @@ X1, y1=datasets.make_circles(n_samples=5000, factor=.6,
 trainData = X1[0:1000]
 time_start1 = time.time()
 clf1 = kmeans(k=4, cluster_type="KMeans")
-pred1 = clf1.cluster(trainData)
+pred1 = clf1.train(trainData)
 time_end1 = time.time()
 print("Runtime of KMeans:", time_end1-time_start1)
 
 time_start2 = time.time()
 clf2 = dbscan()
-pred = clf2.cluster(trainData)
+pred = clf2.train(trainData)
 time_end2 = time.time()
 print("Runtime of DBSCAN:", time_end2-time_start2)
 
