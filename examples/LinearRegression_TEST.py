@@ -23,8 +23,8 @@ def plot(real_label, regression_label):
     plt.title('Regression')
     plt.show()
 
-trainData = np.array(pd.read_table('./dataset4/train.txt', header=None, encoding='gb2312', delim_whitespace=True))
-testData = np.array(pd.read_table('./dataset4/test.txt', header=None, encoding='gb2312', delim_whitespace=True))
+trainData = np.array(pd.read_table('../dataset4/train.txt', header=None, encoding='gb2312', delim_whitespace=True))
+testData = np.array(pd.read_table('../dataset4/test.txt', header=None, encoding='gb2312', delim_whitespace=True))
 trainLabel = trainData[:, -1]
 trainData = np.delete(trainData, -1, axis=1)
 testLabel = testData[:, -1]
