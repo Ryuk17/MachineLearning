@@ -2,7 +2,7 @@
 @ Filename:       Cluster.py
 @ Author:         Danc1elion
 @ Create Date:    2019-05-15   
-@ Update Date:    2019-05-23
+@ Update Date:    2019-05-28
 @ Description:    Implement Cluster
 """
 import sys
@@ -206,13 +206,13 @@ class KMeans:
                 return i
 
     '''
-    Function:  cluster
+    Function:  train
     Description: train the model
     Input:  train_data      dataType: ndarray   description: features
     Output: centers         dataType: ndarray   description: cluster centers
             distances       dataType: ndarray   description: distance between sample and its corresponding cluster(cluster, distance)
     '''
-    def cluster(self, train_data, display="True"):
+    def train(self, train_data, display="True"):
         if self.norm_type == "Standardization":
             train_data = preProcess.Standardization(train_data)
         else:
@@ -303,13 +303,13 @@ class DBSCAN:
         return d
 
     '''
-      Function:  cluster
+      Function:  train
       Description: train the model
       Input:  train_data      dataType: ndarray   description: features
       Output: centers         dataType: ndarray   description: cluster centers
               distances       dataType: ndarray   description: distance between sample and its corresponding cluster(cluster, distance)
       '''
-    def cluster(self, train_data, display="True"):
+    def train(self, train_data, display="True"):
         # if self.norm_type == "Standardization":
         #     train_data = preProcess.Standardization(train_data)
         # else:
