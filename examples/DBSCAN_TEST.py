@@ -23,10 +23,7 @@ import time
 import matplotlib.pyplot as plt
 from sklearn import datasets
 
-# trainData = pd.read_table('./dataset/dataset6/train.txt',header=None,encoding='gb2312', delim_whitespace=True)
-# trainData = np.array(trainData)
-X1, y1=datasets.make_circles(n_samples=5000, factor=.6,
-                                      noise=.05)
+X1, y1=datasets.make_circles(n_samples=5000, factor=.6, noise=.05)
 trainData = X1[0:1000]
 time_start1 = time.time()
 clf1 = kmeans(k=4, cluster_type="KMeans")
