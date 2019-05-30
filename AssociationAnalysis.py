@@ -2,7 +2,7 @@
 @ Filename:       AssociationAnalysis.py
 @ Author:         Danc1elion
 @ Create Date:    2019-05-27   
-@ Update Date:    2019-05-28
+@ Update Date:    2019-05-30
 @ Description:    Implement AssociationAnalysis
 """
 
@@ -137,9 +137,9 @@ class Apriori:
                 self.mergeFrequentItem(frequent_item, support_degree, rule, rule_list)
 
     '''
-     Function:  mergeFrequentItem
-     Description: merge frequent item and generate rules
-     Input:  frequent_item      dataType: set         description:  one record of frequent_set
+     Function:  generateRules
+     Description: generate association rules
+     Input:  frequent_set       dataType: set         description:  one record of frequent_set
              support_degree     dataType: dict        description:  support_degree 
      Output: rules              dataType: list        description:  the generated rules
      '''
@@ -157,10 +157,10 @@ class Apriori:
     '''
       Function:  train
       Description: train the model
-      Input:  train_data       dataType: ndarray   description: features
+      Input:  train_data       dataType: ndarray   description: items
               display          dataType: bool      description: print the rules
       Output: rules            dataType: list      description: the learned rules
-              frequent_items    dataType: list      description:  frequent items set
+              frequent_items   dataType: list      description: frequent items set
     '''
     def train(self, data, display=True):
         frequent_set, support_degree = self.findFrequentItem(data)
@@ -170,3 +170,192 @@ class Apriori:
             for i in rules:
                 print(i)
         return frequent_set, rules
+
+class FPNode:
+    def __init__(self, item, count, parent):
+        self.item = item
+        self.count = count              # support
+        self.parent = parent
+        self.next = None               # the same elements
+        self.children = {}
+
+class FPgrowth:
+    def __init__(self, min_support=20, min_confidence=0.7):
+        self.min_support = min_support
+        self.min_confidence = min_confidence
+
+    '''
+      Function:  updataTree
+      Description: updata FP tree
+      Input:  data              dataType: ndarray     description: ordered frequent items
+              FP_tree           dataType: FPNode      description: FP tree
+              header            dataType: dict        description: header pointer table
+              count             dataType: count       description: the number of a record 
+    '''
+    def updataTree(self, data, FP_tree, header, count):
+        frequent_item = data[0]
+        if frequent_item in FP_tree.children:
+            FP_tree.children[frequent_item].count += count
+        else:
+            FP_tree.children[frequent_item] = FPNode(frequent_item, count, FP_tree)
+            if header[frequent_item][1] is None:
+                header[frequent_item][1] = FP_tree.children[frequent_item]
+            else:
+                self.updateHeader(header[frequent_item][1], FP_tree.children[frequent_item]) # share the same path
+
+        if len(data) > 1:
+            self.updataTree(data[1:], FP_tree.children[frequent_item], header, count)  # recurrently update FP tree
+
+    '''
+      Function: updateHeader
+      Description: update header, add tail_node to the current last node of frequent_item
+      Input:  head_node           dataType: FPNode     description: first node in header
+              tail_node           dataType: FPNode     description: node need to be added
+    '''
+    def updateHeader(self, head_node, tail_node):
+        while head_node.next is not None:
+            head_node = head_node.next
+        head_node.next = tail_node
+
+    '''
+      Function:  createFPTree
+      Description: create FP tree
+      Input:  train_data        dataType: ndarray     description: features
+      Output: FP_tree           dataType: FPNode      description: FP tree
+              header            dataType: dict        description: header pointer table
+    '''
+    def createFPTree(self, train_data):
+        initial_header = {}
+        # 1. the first scan, get singleton set
+        for record in train_data:
+            for item in record:
+                initial_header[item] = initial_header.get(item, 0) + 1
+
+        # get singleton set whose support is large than min_support. If there is no set meeting the condition,  return none
+        header = {}
+        for k in initial_header.keys():
+            if initial_header[k] >= self.min_support:
+                header[k] = initial_header[k]
+        frequent_set = set(header)
+        if len(frequent_set) == 0:
+            return None, None
+
+        # enlarge the value, add a pointer
+        for k in header:
+            header[k] = [header[k], None]
+
+        # 2. the second scan, create FP tree
+        FP_tree = FPNode(None, 1, None)        # root node
+        for record in train_data:
+            data = {}
+            for item in record:                # if item is a frequent set， add it
+                if item in frequent_set:       # 2.1 filter infrequent_item
+                    data[item] = header[item][0]
+
+            if len(data) > 0:
+                ordered_data = [val[0] for val in sorted(data.items(), key=lambda temp:temp[1], reverse=True)]  # 2.1 sort all the elements in descending order according to count
+                self.updataTree(ordered_data, FP_tree, header, 1) # 2.2 insert frequent_item in FP-Tree， share the path with the same prefix
+
+        return FP_tree, header
+
+    '''
+      Function: ascendTree
+      Description: ascend tree from leaf node to root node according to path
+      Input:  node           dataType: FPNode     description: leaf node
+      Output: prefix_path    dataType: list       description: prefix path
+              
+    '''
+    def ascendTree(self, node):
+        prefix_path = []
+        while node.parent is not None:
+            node = node.parent
+            prefix_path.append(node.value)
+        return prefix_path
+
+    '''
+    Function: getPrefixPath
+    Description: get prefix path
+    Input:  base          dataType: FPNode     description: pattern base
+            header        dataType: dict       description: header
+    Output: prefix_path   dataType: dict       description: prefix_path
+    '''
+    def getPrefixPath(self, base, header):
+        prefix_path = {}
+        start_node = header[base][1]
+        prefixs = self.ascendTree(start_node)
+        if len(prefixs) != 0:
+            prefix_path[frozenset(prefixs)] = start_node.count
+
+        while start_node.next is not None:
+            start_node = start_node.next
+            prefixs = self.ascendTree(start_node)
+            if len(prefixs) != 0:
+                prefix_path[frozenset(prefixs)] = start_node.count
+        return prefix_path
+
+    '''
+    Function: findFrequentItem
+    Description: find frequent item
+    Input:  header               dataType: dict       description: header
+            prefix               dataType: dict       description: prefix path
+            frequent_set         dataType: set        description: frequent set
+    '''
+    def findFrequentItem(self, header, prefix, frequent_set):
+        # for each item in headPointTable, , then iterate until there is only one element in conditional fptree
+        header_items = [val[0] for val in sorted(header.items(), key=lambda temp: temp[1], reverse=True)]
+        if len(header_items) == 0:
+            return
+
+        for base in header_items:
+            new_prefix = prefix.copy()
+            new_prefix.add(base)
+            support = header[base][0]
+            frequent_set[frozenset(new_prefix)] = support
+
+            prefix_path = self.getPrefixPath(base, header)
+            if len(prefix_path) != 0:
+                conditonal_tree, conditional_header = self.createFPTree(prefix_path)
+                if conditional_header is not None:
+                    self.findFrequentItem(conditional_header, new_prefix, frequent_set)
+
+    '''
+     Function:  generateRules
+     Description: generate association rules
+     Input:  frequent_set       dataType: set         description:  one record of frequent_set
+             rule               dataType: dict        description:  support_degree 
+     '''
+    def generateRules(self, frequent_set, rules):
+        for frequent_item in frequent_set:
+            if len(frequent_item) > 1:
+                self.getRules(frequent_item, frequent_item, frequent_set, rules)
+
+    def getRules(self, frequent_item, current_item, frequent_set, rules):
+        for item in current_item:
+            subset = current_item.remove(item)
+            confidence = frequent_set[frequent_item]/frequent_set[subset]
+            if confidence >= self.min_confidence:
+                flag = False
+                for rule in rules:
+                    if (rule[0] == subset) and (rule[1] == frequent_set - subset):
+                        flag = True
+
+                if flag == False:
+                    rules.append((subset, frequent_set - subset, confidence))
+
+    '''
+      Function:  train
+      Description: train the model
+      Input:  train_data       dataType: ndarray   description: items
+              display          dataType: bool      description: print the rules
+      Output: rules            dataType: list      description: the learned rules
+              frequent_items   dataType: list      description: frequent items set
+    '''
+    def train(self, data, display=True):
+        FP_tree, header = self.createFPTree(data)
+        frequent_set = {}
+        prefix_path = set([])
+        self.findFrequentItem(header, prefix_path, frequent_set)
+        rules = []
+        self.generateRules(frequent_set, rules)
+        return frequent_set, rules
+
