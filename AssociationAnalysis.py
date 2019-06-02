@@ -2,12 +2,12 @@
 @ Filename:       AssociationAnalysis.py
 @ Author:         Danc1elion
 @ Create Date:    2019-05-27   
-@ Update Date:    2019-06-01
+@ Update Date:    2019-06-02
 @ Description:    Implement AssociationAnalysis
 """
 
 class Apriori:
-    def __init__(self, min_support=0.5, min_confidence=0.7):
+    def __init__(self, min_support=0.5, min_confidence=0.6):
         self.min_support = min_support
         self.min_confidence = min_confidence
 
@@ -404,6 +404,156 @@ class FPgrowth:
         self.findFrequentItem(header, prefix_path, frequent_set)
         rules = []
         self.generateRules(frequent_set, rules)
+
+        if display:
+            print("Frequent Items:")
+            for item in frequent_set:
+                print(item)
+            print("_______________________________________")
+            print("Association Rules:")
+            for rule in rules:
+                print(rule)
+        return frequent_set, rules
+
+
+class Eclat:
+    def __init__(self,min_support=3, min_confidence=0.6):
+        self.min_support = min_support
+        self.min_confidence = min_confidence
+
+    '''
+      Function:  invert
+      Description: invert the data and filter the items smaller than min_support
+      Input:  data            dataType: list   description: items
+      Output: frequent_item   dataType: dict   description: invert data
+    '''
+    def invert(self, data):
+        invert_data = {}
+        frequent_item = []
+        support = []
+        for i in range(len(data)):
+            for item in data[i]:
+                if invert_data.get(item) is not None:
+                    invert_data[item].append(i)
+                else:
+                    invert_data[item] = [i]
+
+        for item in invert_data.keys():
+            if len(invert_data[item]) >= self.min_support:
+                frequent_item.append([item])
+                support.append(invert_data[item])
+        frequent_item = list(map(frozenset, frequent_item))
+        return frequent_item, support
+
+    '''
+    Function:  getIntersection
+    Description: get intersection
+    Input:  frequent_set      dataType: dict  description:  frequent set
+            support           dataType: list   description: support of data
+    Output: frequent_item     dataType: dict  description:  frequent_item 
+    '''
+    def getIntersection(self, frequent_item, support):
+        sub_frequent_item = []
+        sub_support = []
+        k = len(frequent_item[0]) + 1
+        for i in range(len(frequent_item)):
+            for j in range(i+1, len(frequent_item)):
+                L1 = list(frequent_item[i])[:k-2]
+                L2 = list(frequent_item[j])[:k-2]
+                if L1 == L2:
+                    flag = len(list(set(support[i]).intersection(set(support[j]))))
+                    if flag >= self.min_support:
+                        sub_frequent_item.append(frequent_item[i] | frequent_item[j])
+                        sub_support.append(list(set(support[i]).intersection(set(support[j]))))
+        return sub_frequent_item, sub_support
+
+    '''
+     Function: findFrequentItem
+     Description: find frequent item
+     Input: frequent_item   dataType: list   description: frequent item
+            support         dataType: list   description: support of data
+            frequent_set   dataType: list   description: frequent set
+    '''
+    def findFrequentItem(self, frequent_item, support, frequent_set,support_set):
+        frequent_set.append(frequent_item)
+        support_set.append(support)
+
+        while len(frequent_item) >= 2:
+            frequent_item, support = self.getIntersection(frequent_item, support)
+            frequent_set.append(frequent_item)
+            support_set.append(support)
+
+    '''
+        Function:  generateRules
+        Description: generate association rules
+        Input:  frequent_set       dataType: set         description:  current frequent item
+                rule               dataType: dict        description:  an item in current frequent item
+        '''
+    def generateRules(self, frequent_set, rules):
+        for frequent_item in frequent_set:
+            if len(frequent_item) > 1:
+                self.getRules(frequent_item, frequent_item, frequent_set, rules)
+
+    '''
+     Function:  removeItem
+     Description: remove item
+     Input:  current_item       dataType: set         description:  one record of frequent_set
+             item               dataType: dict        description:  support_degree 
+     '''
+    def removeItem(self, current_item, item):
+        tempSet = []
+        for elem in current_item:
+            if elem != item:
+                tempSet.append(elem)
+        tempFrozenSet = frozenset(tempSet)
+        return tempFrozenSet
+
+    '''
+     Function:  getRules
+     Description: get association rules
+     Input:  frequent_set       dataType: set         description:  one record of frequent_set
+             rule               dataType: dict        description:  support_degree 
+     '''
+    def getRules(self, frequent_item, current_item, frequent_set, rules):
+        for item in current_item:
+            subset = self.removeItem(current_item, item)
+            confidence = frequent_set[frequent_item] / frequent_set[subset]
+            if confidence >= self.min_confidence:
+                flag = False
+                for rule in rules:
+                    if (rule[0] == subset) and (rule[1] == frequent_item - subset):
+                        flag = True
+
+                if flag == False:
+                    rules.append((subset, frequent_item - subset, confidence))
+
+                if len(subset) >= 2:
+                    self.getRules(frequent_item, subset, frequent_set, rules)
+    '''
+      Function:  train
+      Description: train the model
+      Input:  train_data       dataType: ndarray   description: items
+              display          dataType: bool      description: print the rules
+      Output: rules            dataType: list      description: the learned rules
+              frequent_items   dataType: list      description: frequent items set
+    '''
+    def train(self, data, display=True):
+        # get the invert data
+        frequent_item, support = self.invert(data)
+        frequent_set = []
+        support_set = []
+
+        # get the frequent_set
+        self.findFrequentItem(frequent_item, support,frequent_set, support_set)
+
+        # transfer support list into frequency
+        data = {}
+        for i in range(len(frequent_set)):
+            for j in range(len(frequent_set[i])):
+                data[frequent_set[i][j]] = len(support_set[i][j])
+
+        rules = []
+        self.generateRules(data, rules)
 
         if display:
             print("Frequent Items:")
