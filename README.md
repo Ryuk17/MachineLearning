@@ -10,6 +10,9 @@ Machine learning algorithm written by myself with Python 3.6
 6. [LinearRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)
 7. [DecisionTree](https://github.com/DandelionLau/MachineLearning/blob/master/Tree.py)
 8. [TreeRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Tree.py)
+9. [AdaBoost](https://github.com/DandelionLau/MachineLearning/tree/master/AdaBoost.py)
+10. [Blending](https://github.com/DandelionLau/MachineLearning/blob/master/Blending.py)
+11. [Stacking](https://github.com/DandelionLau/MachineLearning/blob/master/Stacking.py)
 
 
 + **Unsupervised Learning**
@@ -19,10 +22,6 @@ Machine learning algorithm written by myself with Python 3.6
 4. [FP-growth](https://github.com/DandelionLau/MachineLearning/blob/master/AssociationAnalysis.py)
 5. [Eclat](https://github.com/DandelionLau/MachineLearning/blob/master/AssociationAnalysis.py)
 
-+ **Ensemble Learning**
-1. [AdaBoost](https://github.com/DandelionLau/MachineLearning/tree/master/AdaBoost.py)
-2. [Blending](https://github.com/DandelionLau/MachineLearning/blob/master/Blending.py)
-3. [Stacking](https://github.com/DandelionLau/MachineLearning/blob/master/Stacking.py)
 
 + **Others**
 
