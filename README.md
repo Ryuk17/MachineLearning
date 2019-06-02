@@ -17,7 +17,7 @@ Machine learning algorithm written by myself with Python 3.6
 2. [DBSCAN](https://github.com/DandelionLau/MachineLearning/blob/master/Cluster.py)
 3. [Apriori](https://github.com/DandelionLau/MachineLearning/blob/master/AssociationAnalysis.py)
 4. [FP-growth](https://github.com/DandelionLau/MachineLearning/blob/master/AssociationAnalysis.py)
-5. [Eclat(Ongoing)](https://github.com/DandelionLau/MachineLearning/blob/master/AssociationAnalysis.py)
+5. [Eclat](https://github.com/DandelionLau/MachineLearning/blob/master/AssociationAnalysis.py)
 
 + **Ensemble Learning**
 1. [AdaBoost](https://github.com/DandelionLau/MachineLearning/tree/master/AdaBoost.py)
