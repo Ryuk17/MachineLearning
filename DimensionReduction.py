@@ -47,7 +47,7 @@ class PCA:
         self.contribute_rate = contribute_rate
         self.acc_contribute_rate = acc_contribute_rate
 
-        matrix = eigenvector[:, k]
+        matrix = np.mat(eigenvector)[:, k]
         self.matrix = matrix
         return self
 
