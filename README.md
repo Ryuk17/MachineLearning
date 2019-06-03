@@ -25,7 +25,7 @@ Machine learning algorithm written by myself with Python 3.6
 
 + **Others**
 1. [PCA](https://github.com/DandelionLau/MachineLearning/blob/master/DimensionReduction.py)
-2. [SVD](https://github.com/DandelionLau/MachineLearning/blob/master/DimensionReduction.py)
+
 
 ## Tutorials
 中文教程: [从零实现机器学习算法](https://zhuanlan.zhihu.com/easymachinelearning)  
