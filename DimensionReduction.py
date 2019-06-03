@@ -63,9 +63,4 @@ class PCA:
         return transformed_data
 
 
-class SVD:
-    def __init__(self, feature_dim=10e5):
-        self.matrix = None
-        self.feature_dim = feature_dim
-
 
