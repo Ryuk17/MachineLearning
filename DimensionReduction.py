@@ -2,7 +2,7 @@
 @ Filename:       DimensionReduction.py
 @ Author:         Danc1elion
 @ Create Date:    2019-06-02   
-@ Update Date:    2019-06-04
+@ Update Date:    2019-06-06
 @ Description:    Implement DimensionReduction
 """
 import numpy as np
@@ -164,6 +164,3 @@ class LDA:
     def transformData(self, data):
         transformed_data = np.dot(data, self.matrix)
         return transformed_data
-
-
-
