@@ -2,7 +2,7 @@
 @ Filename:       HMM.py
 @ Author:         Danc1elion
 @ Create Date:    2019-06-06   
-@ Update Date:    2019-06-12
+@ Update Date:    2019-06-13
 @ Description:    Implement HMM
 """
 import numpy as np
@@ -10,7 +10,7 @@ import preProcess
 import pickle
 
 class HiddenMarkovModel:
-    def __init__(self, Q, V, iterations=100):
+    def __init__(self, Q, V, iterations=10):
         self.Q = Q                              # the set of states
         self.V = V                              # the set of observation
         self.N = len(Q)                         # length of Q
@@ -19,8 +19,6 @@ class HiddenMarkovModel:
         self.B = None                           # observation probability matrix
         self.Pi = None                          # initial state probability
         self.P = None                           # probability  P(O|lambda)
-        self.alpha = None                       # forward_probability
-        self.beta = None                        # backward_probability
         self.iterations = iterations             # condition of convergence in EM
 
     '''
@@ -68,9 +66,6 @@ class HiddenMarkovModel:
         # final result
         state = np.multiply(state, np.multiply(self.Pi, self.B[:, O[0]]))
         p = np.sum(state)
-
-        self.alpha = forward_probability
-        self.beta = backward_probability
         return forward_probability, backward_probability, p
 
     '''
@@ -93,7 +88,7 @@ class HiddenMarkovModel:
 
         # calculate observation probability matrix
         B = np.zeros([self.N, self.M])
-        for i in range(S - 1):
+        for i in range(S):
             for m in range(self.N):
                 for n in range(self.M):
                     if I[i] == self.Q[m] and O[i] == self.V[n]:  # when state is m and observation is n
@@ -108,37 +103,55 @@ class HiddenMarkovModel:
       Output: self                     dataType: obj       description: the trained model
     '''
     def supervisedTrain(self, state_sequence, observation_sequence):
-        S = len(state_sequence)
-        A = np.zeros([self.N, self.N])
-        B = np.zeros([self.N, self.M])
-        initial_state = np.zeros([S, 1])
+        # there are more than one samples
+        if len(state_sequence[0]) != 1:
+            S = len(state_sequence)
+            A = np.zeros([self.N, self.N])
+            B = np.zeros([self.N, self.M])
+            for i in range(S):
+                a, b = self.parameterEstimation(state_sequence[i], observation_sequence[i])
+                A += a
+                B += b
 
-        for i in range(S):
-            a, b = self.parameterEstimation(state_sequence[i], observation_sequence[i])
-            A += a
-            B += b
-            initial_state[i] = state_sequence[i][0]
+            # calculate the initial probability
+            initial_state = np.zeros([self.N, 1])
+            for i in range(S):
+                for j in range(self.N):
+                    if state_sequence[i][0] == self.Q[j]:
+                        initial_state[j] += 1
+            Pi = initial_state / S
 
-        # transfer probability matrix
-        for k in range(self.N):
-            A[k, :] /= np.sum(A[k, :])
+            # transfer probability matrix
+            for k in range(self.N):
+                A[k, :] /= np.sum(A[k, :])
 
-        # observation probability matrix
-        for k in range(self.N):
-            B[k, :] /= np.sum(B[k, :])
+            # observation probability matrix
+            for k in range(self.N):
+                B[k, :] /= np.sum(B[k, :])
 
-        # calculate the initial probability
-        Pi = np.zeros([self.N, 1])
-        for i in range(S):
-            for j in range(self.N):
-                if initial_state[i] == self.Q[j]:
-                    Pi[j] += 1
-        Pi = Pi/S
+            self.A = A
+            self.B = B
+            self.Pi = Pi
+            return self
 
-        self.A = A
-        self.B = B
-        self.Pi = Pi
-        return self
+        # there is only one samples
+        else:
+            A, B = self.parameterEstimation(state_sequence, observation_sequence)
+            Pi = np.zeros([self.N, 1])
+            Pi[state_sequence[0]] = 1
+
+            # transfer probability matrix
+            for k in range(self.N):
+                A[k, :] /= np.sum(A[k, :])
+
+            # observation probability matrix
+            for k in range(self.N):
+                B[k, :] /= np.sum(B[k, :])
+
+            self.A = A
+            self.B = B
+            self.Pi = Pi
+            return self
 
     '''
       Function:  unsupervisedTrain
@@ -154,30 +167,46 @@ class HiddenMarkovModel:
 
         T = len(O)
         for it in range(self.iterations):
-            # E step
-            # get forward  and backward probability
-            self.alpha, self.beta, self.P = self.calculateObservationProbability(O)
 
-            post_state = np.multiply(self.alpha, self.beta)
-            xi = np.zeros([self.N, self.N])
-            for i in range(T):
-                xi += (1 / self.P[i]) * np.outer(self.alpha[i - 1],self.beta[i]*self.B(O[i])) * self.A
+            alpha, beta, P = self.calculateObservationProbability(O)
 
-            # M step
-            self.Pi = post_state[0]/np.sum(post_state)
-            for k in range(self.N):
-                self.A[k] = xi[k]/np.sum(xi[k])
+            # the probability of being in state  i at time t given the observed sequence Y and the parameters
+            gamma = np.multiply(alpha, beta)
+            gamma = gamma / gamma.sum()
 
-            gamma = np.zeros([self.N, self.M])
+            # the probability of being in state i and j at times t and t+1 respectively given the observed sequence Y and parameters
+            xi = np.zeros((T, self.N, self.N))
+            for t in range(T - 1):
+                denom = 0.0
+                for i in range(self.N):
+                    for j in range(self.N):
+                        thing = 1.0
+                        thing *= alpha[t][i]
+                        thing *= self.A[i][j]
+                        thing *= self.B[j][t + 1]
+                        thing *= beta[t + 1][j]
+                        denom += thing
+                for i in range(self.N):
+                    for j in range(self.N):
+                        numer = 1.0
+                        numer *= alpha[t][i]
+                        numer *= self.A[i][j]
+                        numer *= self.B[j][t + 1]
+                        numer *= beta[t + 1][j]
+                        xi[t][i][j] = numer / denom
 
-
-            for j in range(self.N):
+            # update A
+            self.A = np.sum(xi[:T-1], axis=0)/np.sum(gamma[:T-1], axis=0)
+            # update Pi
+            self.Pi = gamma[0]
+            # update B
+            temp = 0.0
+            for t in range(T):
                 for k in range(self.M):
-                    for t in range(T):
-                        if O[t] == self.V[k]:
-                            gamma[j][k] += 1
+                    if O[t] == self.V[k]:
+                        temp += gamma[t]
+            self.B = temp/ gamma.sum()
 
-            self.B = gamma/post_state
         return self
 
     '''
@@ -188,7 +217,6 @@ class HiddenMarkovModel:
       Output: self                     dataType: obj       description: the trained model
     '''
     def train(self, state_sequence, observation_sequence):
-
         if state_sequence is not None:
             return self.supervisedTrain(state_sequence, observation_sequence)
         else:
