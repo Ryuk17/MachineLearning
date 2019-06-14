@@ -2,7 +2,7 @@
 @ Filename:       HMM.py
 @ Author:         Danc1elion
 @ Create Date:    2019-06-06   
-@ Update Date:    2019-06-13
+@ Update Date:    2019-06-14
 @ Description:    Implement HMM
 """
 import numpy as np
@@ -20,53 +20,6 @@ class HiddenMarkovModel:
         self.Pi = None                          # initial state probability
         self.P = None                           # probability  P(O|lambda)
         self.iterations = iterations             # condition of convergence in EM
-
-    '''
-      Function:  calculateObservationProbability
-      Description: calculate observation sequence probability  P(O|lambda)
-      Input:    O               dataType: list       description: observation sequence
-      Output:   forward_prob    dataType: list       description: forward  probability at each time step
-                backward_prob   dataType: list       description: backward  probability at each time step
-                p               dataType: float      description: observation sequence probability  P(O|lambda)
-    '''
-    def calculateObservationProbability(self, O):
-        T = len(O)
-        N = len(self.Q)
-
-        # forward algorithm
-        forward_probability = []
-        # calculate the initial state
-        state = np.multiply(self.Pi, self.B[:, O[0]]).reshape(N, 1)
-        forward_probability.append(state)
-
-        # recursion
-        t = 1
-        while t < T:
-            state = np.multiply(state, self.A)
-            state = np.sum(state, axis=0)
-            state = np.multiply(state, self.B[:, O[t]]).reshape(N, 1)
-            forward_probability.append(state)
-            t = t + 1
-        # final result
-        p = np.sum(state)
-
-        # backward algorithm
-        backward_probability = []
-        # initial state
-        state = np.ones([N, 1])
-        backward_probability.append(state)
-        # recursion
-        t = T - 1
-        while t > 0:
-            temp = np.multiply(self.B[:, O[t]], self.A)
-            temp = np.multiply(state, temp)
-            state = np.sum(temp, axis=1)
-            backward_probability.append(state)
-            t = t - 1
-        # final result
-        state = np.multiply(state, np.multiply(self.Pi, self.B[:, O[0]]))
-        p = np.sum(state)
-        return forward_probability, backward_probability, p
 
     '''
       Function: parameterEstimation
@@ -154,60 +107,202 @@ class HiddenMarkovModel:
             return self
 
     '''
+        Function:  calculateObservationProbability
+        Description: calculate observation sequence probability  P(O|lambda)
+        Input:    O               dataType: ndarray    description: observation sequences
+                  A               dataType: ndarray    description: transfer probability matrix
+                  B               dataType: ndarray    description: observation probability matrix
+                  Pi              dataType: ndarray    description: initial state probability
+        Output:   forward_prob    dataType: list       description: forward  probability at each time step
+                  backward_prob   dataType: list       description: backward  probability at each time step
+                  p               dataType: float      description: observation sequence probability  P(O|lambda)
+      '''
+    def calculateObservationProbability(self, O, A, B, Pi):
+        T = len(O)
+        N = len(self.Q)
+
+        # forward algorithm
+        forward_probability = []
+        # calculate the initial state
+        state = np.multiply(Pi, B[:, O[0]]).reshape(N, 1)
+        forward_probability.append(state)
+
+        # recursion
+        t = 1
+        while t < T:
+            state = np.multiply(state, A)
+            state = np.sum(state, axis=0)
+            state = np.multiply(state, B[:, O[t]]).reshape(N, 1)
+            forward_probability.append(state)
+            t = t + 1
+        # final result
+        p = np.sum(state)
+
+        # backward algorithm
+        backward_probability = []
+        # initial state
+        state = np.ones([N, 1])
+        backward_probability.append(state)
+        # recursion
+        t = T - 1
+        while t > 0:
+            temp = np.multiply(B[:, O[t]], A)
+            temp = np.multiply(state, temp)
+            state = np.sum(temp, axis=1)
+            backward_probability.append(state)
+            t = t - 1
+        # final result
+        state = np.multiply(state, np.multiply(Pi, B[:, O[0]]))
+        p = np.sum(state)
+        return forward_probability, backward_probability, p
+
+    '''
+        Function:  EStep
+        Description: estimate the parameters
+        Input:    O               dataType: ndarray    description: observation sequences
+                  A               dataType: ndarray    description: transfer probability matrix
+                  B               dataType: ndarray    description: observation probability matrix
+                  Pi              dataType: ndarray    description: initial state probability
+        Output:   gamma           dataType: ndarray    description: single state gamma
+                  xi              dataType: ndarray    description: double state xi
+                  p               dataType: float      description: observation sequence probability  P(O|lambda)
+    '''
+    def EStep(self, O, A, B, Pi):
+        T = len(O)
+        alpha, beta, P = self.calculateObservationProbability(O, A, B, Pi)
+
+        # the probability of being in state  i at time t given the observed sequence Y and the parameters
+        gamma = np.multiply(alpha, beta)
+        gamma = gamma / gamma.sum()
+
+        # the probability of being in state i and j at times t and t+1 respectively given the observed sequence Y and parameters
+        xi = np.zeros((T, self.N, self.N))
+        for t in range(T - 1):
+            denominator = 0.0
+            for i in range(self.N):
+                for j in range(self.N):
+                    thing = 1.0
+                    thing *= alpha[t][i]
+                    thing *= self.A[i][j]
+                    thing *= self.B[j][t + 1]
+                    thing *= beta[t + 1][j]
+                    denominator += thing
+            for i in range(self.N):
+                for j in range(self.N):
+                    numerator = 1.0
+                    numerator *= alpha[t][i]
+                    numerator *= self.A[i][j]
+                    numerator *= self.B[j][t + 1]
+                    numerator *= beta[t + 1][j]
+                    xi[t][i][j] = numerator / denominator
+
+        return gamma, xi, P
+
+    '''
+        Function:  MStep
+        Description: maximize the parameters
+        Input:    O               dataType: ndarray    description: observation sequences
+                  A               dataType: ndarray    description: transfer probability matrix
+                  B               dataType: ndarray    description: observation probability matrix
+                  Pi              dataType: ndarray    description: initial state probability
+                  gamma           dataType: ndarray    description: single state gamma
+                  xi              dataType: ndarray    description: double state xi
+        Output:   A               dataType: ndarray    description: new transfer probability matrix
+                  B               dataType: ndarray    description: new observation probability matrix
+                  Pi              dataType: ndarray    description: new initial state probability
+    '''
+    def MStep(self, O, gamma, xi):
+        T = len(O)
+        # update A
+        A = np.sum(xi[:T - 1], axis=0) / np.sum(gamma[:T - 1], axis=0)
+        # update Pi
+        Pi = gamma[0]
+        # update B
+        temp = 0.0
+        for t in range(T):
+            for k in range(self.M):
+                if O[t] == self.V[k]:
+                    temp += gamma[t]
+        B = temp / gamma.sum()
+        return A, B, Pi
+
+    '''
       Function:  unsupervisedTrain
       Description: train the model with unsupervised algorithm
       Input:  observation_sequence     dataType: list      description: observation sequence
       Output: self                     dataType: obj       description: the trained model
     '''
-    def unsupervisedTrain(self, O):
-        # initialize A, B, Pi
-        self.A = np.zeros([self.N, self.N])/self.N
-        self.B = np.zeros([self.N, self.M])/self.N
-        self.Pi = np.random.random([self.N, 1])/self.N
+    def unsupervisedTrain(self, O, epsilon=0.0001):
+        # there are more than one samples
+        if len(O[0]) != 1:
+            sample_num = len(O)
+            A = np.ones([self.N, self.N])/self.N
+            B = np.ones([self.N, self.M])/self.N
+            Pi = np.random.random([self.N, 1])/self.N
 
-        T = len(O)
-        for it in range(self.iterations):
+            for n in range(self.iterations):
+                denominator_a = np.zeros([self.N, self.N])
+                numerator_a = np.zeros([self.N, self.N])
+                denominator_b = np.zeros([self.N, self.M])
+                numerator_b = np.zeros([self.N, self.M])
+                denominator_pi = np.zeros([self.N, 1])
+                numerator_pi = np.zeros([self.N, 1])
+                for i in range(sample_num):
+                    T = len(O)
+                    # E step
+                    gamma, xi, P = self.EStep(O, A, B, Pi)
 
-            alpha, beta, P = self.calculateObservationProbability(O)
+                    # M step
+                    # parameters for A
+                    numerator_a += 1/P * np.sum(xi, axis=0)
+                    denominator_a += 1/P * np.sum(gamma[0:T-1], axis=0)
 
-            # the probability of being in state  i at time t given the observed sequence Y and the parameters
-            gamma = np.multiply(alpha, beta)
-            gamma = gamma / gamma.sum()
+                    # parameters for B
+                    for t in range(T):
+                        for k in range(self.M):
+                            if O[t] == self.V[k]:
+                                numerator_b += gamma[t]
+                    numerator_b *= 1/P
+                    denominator_b += 1 / P * np.sum(gamma, axis=0)
 
-            # the probability of being in state i and j at times t and t+1 respectively given the observed sequence Y and parameters
-            xi = np.zeros((T, self.N, self.N))
-            for t in range(T - 1):
-                denom = 0.0
-                for i in range(self.N):
-                    for j in range(self.N):
-                        thing = 1.0
-                        thing *= alpha[t][i]
-                        thing *= self.A[i][j]
-                        thing *= self.B[j][t + 1]
-                        thing *= beta[t + 1][j]
-                        denom += thing
-                for i in range(self.N):
-                    for j in range(self.N):
-                        numer = 1.0
-                        numer *= alpha[t][i]
-                        numer *= self.A[i][j]
-                        numer *= self.B[j][t + 1]
-                        numer *= beta[t + 1][j]
-                        xi[t][i][j] = numer / denom
+                    # parameters for Pi
+                    numerator_pi += 1/P * gamma[0]
+                    denominator_pi += 1/P
 
-            # update A
-            self.A = np.sum(xi[:T-1], axis=0)/np.sum(gamma[:T-1], axis=0)
-            # update Pi
-            self.Pi = gamma[0]
-            # update B
-            temp = 0.0
-            for t in range(T):
-                for k in range(self.M):
-                    if O[t] == self.V[k]:
-                        temp += gamma[t]
-            self.B = temp/ gamma.sum()
+                # update A
+                A = numerator_a / denominator_a
 
-        return self
+                # update B
+                B = numerator_b / denominator_b
+
+                # update Pi
+                Pi = numerator_pi / denominator_pi
+
+            self.A = A
+            self.B = B
+            self.Pi = Pi
+            return self
+
+        # there is only one samples
+        else:
+            # initialize A, B, Pi
+            A = np.ones([self.N, self.N])/self.N
+            B = np.ones([self.N, self.M])/self.N
+            Pi = np.random.random([self.N, 1])/self.N
+
+            # EM algorithm
+            for it in range(self.iterations):
+                gamma, xi, old_prob = self.EStep(O, A, B, Pi)
+                A, B, Pi = self.MStep(O, gamma, xi)
+                _, _, new_prob = self.calculateObservationProbability(O, A, B, Pi)
+
+                if abs(new_prob -old_prob) < epsilon:
+                    break
+
+            self.A = A
+            self.B = B
+            self.Pi = Pi
+            return self
 
     '''
       Function:  train
@@ -216,7 +311,7 @@ class HiddenMarkovModel:
               observation_sequence     dataType: list      description: observation sequence
       Output: self                     dataType: obj       description: the trained model
     '''
-    def train(self, state_sequence, observation_sequence):
+    def train(self, observation_sequence, state_sequence=None):
         if state_sequence is not None:
             return self.supervisedTrain(state_sequence, observation_sequence)
         else:
