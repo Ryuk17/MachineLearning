@@ -149,7 +149,7 @@ class HiddenMarkovModel:
             temp = np.multiply(B[:, O[t]], A)
             temp = np.multiply(state, temp)
             state = np.sum(temp, axis=1)
-            backward_probability.append(state)
+            backward_probability.append(state.reshape(N, 1))
             t = t - 1
         # final result
         state = np.multiply(state, np.multiply(Pi, B[:, O[0]]))
@@ -172,27 +172,29 @@ class HiddenMarkovModel:
         alpha, beta, P = self.calculateObservationProbability(O, A, B, Pi)
 
         # the probability of being in state  i at time t given the observed sequence Y and the parameters
-        gamma = np.multiply(alpha, beta)
-        gamma = gamma / gamma.sum()
+        gamma = np.zeros([T, self.N])
+        for t in range(T):
+            gamma[t, :] = np.multiply(alpha[t], beta[t]).reshape(self.N)
+            gamma[t, :] /= np.sum(gamma[t, :])
 
         # the probability of being in state i and j at times t and t+1 respectively given the observed sequence Y and parameters
-        xi = np.zeros((T, self.N, self.N))
+        xi = np.zeros((T - 1, self.N, self.N))
         for t in range(T - 1):
             denominator = 0.0
             for i in range(self.N):
                 for j in range(self.N):
                     thing = 1.0
                     thing *= alpha[t][i]
-                    thing *= self.A[i][j]
-                    thing *= self.B[j][t + 1]
+                    thing *= A[i][j]
+                    thing *= B[j][t + 1]
                     thing *= beta[t + 1][j]
                     denominator += thing
             for i in range(self.N):
                 for j in range(self.N):
                     numerator = 1.0
                     numerator *= alpha[t][i]
-                    numerator *= self.A[i][j]
-                    numerator *= self.B[j][t + 1]
+                    numerator *= A[i][j]
+                    numerator *= B[j][t + 1]
                     numerator *= beta[t + 1][j]
                     xi[t][i][j] = numerator / denominator
 
@@ -218,11 +220,16 @@ class HiddenMarkovModel:
         # update Pi
         Pi = gamma[0]
         # update B
-        temp = 0.0
+        temp = np.zeros([self.N, self.M])
         for t in range(T):
-            for k in range(self.M):
-                if O[t] == self.V[k]:
-                    temp += gamma[t]
+            for j in range(self.N):
+                for k in range(self.M):
+                    if O[t] == self.V[k]:
+                        flag = 1
+                    else:
+                        flag = 0
+                    temp[j][k] = gamma[t][j] * flag
+
         B = temp / gamma.sum()
         return A, B, Pi
 
@@ -236,21 +243,22 @@ class HiddenMarkovModel:
         # there are more than one samples
         if len(O[0]) != 1:
             sample_num = len(O)
-            A = np.ones([self.N, self.N])/self.N
-            B = np.ones([self.N, self.M])/self.N
-            Pi = np.random.random([self.N, 1])/self.N
+            A = np.random.random([self.N, self.N])
+            B = np.random.random([self.N, self.M])
+            Pi = np.random.random([self.N])
 
             for n in range(self.iterations):
-                denominator_a = np.zeros([self.N, self.N])
-                numerator_a = np.zeros([self.N, self.N])
-                denominator_b = np.zeros([self.N, self.M])
-                numerator_b = np.zeros([self.N, self.M])
-                denominator_pi = np.zeros([self.N, 1])
-                numerator_pi = np.zeros([self.N, 1])
+                denominator_a = 0.0
+                numerator_a = 0.0
+                denominator_b = 0.0
+                numerator_b = 0.0
+                denominator_pi = 0.0
+                numerator_pi = 0.0
+
                 for i in range(sample_num):
-                    T = len(O)
+                    T = len(O[i])
                     # E step
-                    gamma, xi, P = self.EStep(O, A, B, Pi)
+                    gamma, xi, P = self.EStep(O[i], A, B, Pi)
 
                     # M step
                     # parameters for A
@@ -258,12 +266,18 @@ class HiddenMarkovModel:
                     denominator_a += 1/P * np.sum(gamma[0:T-1], axis=0)
 
                     # parameters for B
+                    temp = np.zeros([self.N, self.M])
                     for t in range(T):
-                        for k in range(self.M):
-                            if O[t] == self.V[k]:
-                                numerator_b += gamma[t]
-                    numerator_b *= 1/P
-                    denominator_b += 1 / P * np.sum(gamma, axis=0)
+                        for j in range(self.N):
+                            for k in range(self.M):
+                                if O[i][t] == self.V[k]:
+                                    flag = 1
+                                else:
+                                    flag = 0
+                                temp[j][k] += gamma[t][j] * flag
+
+                    numerator_b += 1/P * temp
+                    denominator_b += 1/P * np.sum(gamma, axis=0)
 
                     # parameters for Pi
                     numerator_pi += 1/P * gamma[0]
@@ -273,7 +287,8 @@ class HiddenMarkovModel:
                 A = numerator_a / denominator_a
 
                 # update B
-                B = numerator_b / denominator_b
+                for i in range(self.N):
+                    B[i, :] = numerator_b[i, :] / denominator_b[i]
 
                 # update Pi
                 Pi = numerator_pi / denominator_pi
@@ -288,7 +303,7 @@ class HiddenMarkovModel:
             # initialize A, B, Pi
             A = np.ones([self.N, self.N])/self.N
             B = np.ones([self.N, self.M])/self.N
-            Pi = np.random.random([self.N, 1])/self.N
+            Pi = np.random.random([self.N])/self.N
 
             # EM algorithm
             for it in range(self.iterations):
@@ -378,7 +393,7 @@ class HiddenMarkovModel:
     def Approximate(self, O):
         T = len(O)
         state_sequence = np.zeros(T)
-        alpha, beta, p = self.calculateObservationProbability(O)
+        alpha, beta, p = self.calculateObservationProbability(O, self.A, self.B, self.Pi)
         for t in range(T):
             gamma = np.multiply(alpha[t], beta[t])
             gamma = gamma/np.sum(gamma)
