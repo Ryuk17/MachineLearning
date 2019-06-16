@@ -17,7 +17,7 @@ Machine learning algorithm written by myself with Python 3.6
 2. [LocallyWeightedLinearRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)
 3. [RidgeRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)
 4. [LassoRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)  
-5  [StepWiseRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)
+5. [StepWiseRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)
 2. [TreeRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Tree.py)
 
 + **Cluster**
