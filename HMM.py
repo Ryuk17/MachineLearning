@@ -2,7 +2,7 @@
 @ Filename:       HMM.py
 @ Author:         Danc1elion
 @ Create Date:    2019-06-06   
-@ Update Date:    2019-06-14
+@ Update Date:    2019-06-16
 @ Description:    Implement HMM
 """
 import numpy as np
@@ -57,7 +57,7 @@ class HiddenMarkovModel:
     '''
     def supervisedTrain(self, state_sequence, observation_sequence):
         # there are more than one samples
-        if len(state_sequence[0]) != 1:
+        if len(state_sequence.shape) != 1:
             S = len(state_sequence)
             A = np.zeros([self.N, self.N])
             B = np.zeros([self.N, self.M])
@@ -67,7 +67,7 @@ class HiddenMarkovModel:
                 B += b
 
             # calculate the initial probability
-            initial_state = np.zeros([self.N, 1])
+            initial_state = np.zeros([self.N])
             for i in range(S):
                 for j in range(self.N):
                     if state_sequence[i][0] == self.Q[j]:
@@ -234,6 +234,20 @@ class HiddenMarkovModel:
         return A, B, Pi
 
     '''
+      Function: initializeParameters
+      Description: initialize A, B, Pi
+      Output:     A               dataType: ndarray    description: initial transfer probability matrix
+                  B               dataType: ndarray    description: initial observation probability matrix
+                  Pi              dataType: ndarray    description: initial initial state probability
+    '''
+    def initializeParameters(self):
+        # initialize A, B, Pi, which follow the sum of each row is equal to 1
+        A = np.random.dirichlet(np.ones(self.N), size=self.N)
+        B = np.random.dirichlet(np.ones(self.M), size=self.N)
+        Pi = np.random.dirichlet(np.ones(self.N), size=1)
+        return A, B, Pi
+
+    '''
       Function:  unsupervisedTrain
       Description: train the model with unsupervised algorithm
       Input:  observation_sequence     dataType: list      description: observation sequence
@@ -241,11 +255,9 @@ class HiddenMarkovModel:
     '''
     def unsupervisedTrain(self, O, epsilon=0.0001):
         # there are more than one samples
-        if len(O[0]) != 1:
+        if len(O.shape) != 1:
             sample_num = len(O)
-            A = np.random.random([self.N, self.N])
-            B = np.random.random([self.N, self.M])
-            Pi = np.random.random([self.N])
+            A, B, Pi = self.initializeParameters()
 
             for n in range(self.iterations):
                 denominator_a = 0.0
@@ -344,13 +356,19 @@ class HiddenMarkovModel:
 
         result = []
         if method == "Viterbi":
-            for i in range(sample_num):
-                result.append(self.Viterbi(test_data[i]))
-            return result
+            if len(test_data.shape) != 1:
+                for i in range(sample_num):
+                    result.append(self.Viterbi(test_data[i]))
+                return result
+            else:
+                return self.Viterbi(test_data)
         elif method == "Approximate":
-            for i in range(sample_num):
-                result.append(self.Approximate(test_data[i]))
-            return result
+            if len(test_data.shape) != 1:
+                for i in range(sample_num):
+                    result.append(self.Approximate(test_data[i]))
+                return result
+            else:
+                return self.Approximate(test_data)
         else:
             raise NameError('Unrecognized method')
 
