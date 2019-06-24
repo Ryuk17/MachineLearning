@@ -37,7 +37,7 @@ Machine learning algorithm written by myself with Python 3.6
 
 + **Tagging**
 1. [HMM](https://github.com/DandelionLau/MachineLearning/blob/master/HMM.py)
-2. [CRF]()
+
 
 
 ## Tutorials
