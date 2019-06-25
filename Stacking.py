@@ -83,7 +83,7 @@ class StackingClassifier:
             for clf in sub_model:
                 sub_prediction_feature[:, i] = clf.predict(test_data)[:, 0]
                 i = i + 1
-                pre_prediction[:, j] = sub_prediction_feature.mean(1)
+            pre_prediction[:, j] = sub_prediction_feature.mean(1)
 
         test_num = test_data.shape[0]
         prediction = np.zeros([test_num, 1])
