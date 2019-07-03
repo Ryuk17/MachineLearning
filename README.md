@@ -11,6 +11,7 @@ Machine learning algorithm written by myself with Python 3.6
 8. [AdaBoost](https://github.com/DandelionLau/MachineLearning/tree/master/AdaBoost.py)
 9. [Blending](https://github.com/DandelionLau/MachineLearning/blob/master/Blending.py)
 10. [Stacking](https://github.com/DandelionLau/MachineLearning/blob/master/Stacking.py)
+11. [XGBoost]()
 
 +  **Regression**
 1. [LinearRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)
