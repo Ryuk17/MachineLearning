@@ -13,8 +13,8 @@ import time
 from sklearn.linear_model import LogisticRegression
 import pandas as pd
 
-trainData = np.array(pd.read_table('./dataset/dataset1/train.txt', header=None, encoding='gb2312', delim_whitespace=True))
-testData = np.array(pd.read_table('./dataset/dataset1/test.txt', header=None, encoding='gb2312', delim_whitespace=True))
+trainData = np.array(pd.read_table('../dataset/dataset1/train.txt', header=None, encoding='gb2312', delim_whitespace=True))
+testData = np.array(pd.read_table('../dataset/dataset1/test.txt', header=None, encoding='gb2312', delim_whitespace=True))
 train_y = trainData[:, -1]
 train_x = np.delete(trainData, -1, axis=1)
 test_y = testData[:, -1]

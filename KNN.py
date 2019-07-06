@@ -55,7 +55,7 @@ class KNNClassifier:
     Output: self             dataType: obj       description: 
     '''
     def train(self, train_data, train_label):
-        if self.normType == "Standardization":
+        if self.norm_type == "Standardization":
             train_data = self.Standardization(train_data)
         else:
             train_data = self.Normalization(train_data)
@@ -75,7 +75,7 @@ class KNNClassifier:
     '''
     def predict(self, test_data):
         # Normalization
-        if self.normType == "Standardization":
+        if self.norm_type == "Standardization":
             testData = self.Standardization(test_data)
         else:
             testData = self.Normalization(test_data)

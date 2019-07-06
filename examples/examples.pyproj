@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{f2371da6-7acf-4502-87b5-4bfb129ef087}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>TreeRegression_TEST.py</StartupFile>
+    <SearchPath>..\..\MachineLearningFork</SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId>CondaEnv|CondaEnv|base (R + Py_3.6)</InterpreterId>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AdaptiveBoost_TEST.py" />
+    <Compile Include="Apriori_TEST.py" />
+    <Compile Include="Blending_TEST.py" />
+    <Compile Include="DBSCAN_TEST.py" />
+    <Compile Include="DecisionTree_TEST.py" />
+    <Compile Include="Eclat_TEST.py" />
+    <Compile Include="FP_growth_TEST.py" />
+    <Compile Include="HMM_TEST.py" />
+    <Compile Include="KMeans_TEST.py" />
+    <Compile Include="KNN_TEST.py" />
+    <Compile Include="LDA_TEST.py" />
+    <Compile Include="LinearRegression_TEST.py" />
+    <Compile Include="Logistic_TEST.py" />
+    <Compile Include="NaiveBayes_TEST.py" />
+    <Compile Include="PCA_TEST.py" />
+    <Compile Include="Perceptron_TEST.py" />
+    <Compile Include="Stacking_TEST.py" />
+    <Compile Include="SVM_TEST.py" />
+    <Compile Include="TreeRegression_TEST.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="CondaEnv|CondaEnv|base (R + Py_3.6)" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>

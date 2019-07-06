@@ -8,7 +8,7 @@
 
 from Blending import *
 from Perceptron import *
-from Logistic import *
+from LogisticRegression import *
 import numpy as np
 import pandas as pd
 import time

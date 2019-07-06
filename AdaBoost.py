@@ -10,7 +10,7 @@ import numpy as np
 import preProcess
 import pickle
 import random
-import SVM, KNN, DecisionTree,Logistic, Perceptron
+import SVM, KNN, DecisionTree, LogisticRegression, Perceptron
 import math
 
 class Adaboost:
