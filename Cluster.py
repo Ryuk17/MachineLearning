@@ -288,7 +288,7 @@ class DBSCAN:
       Input:  x1      dataType: ndarray   description: input vector
               x2      dataType: ndarray   description: input vector
       Output: d       dataType: float     description: distance between input vectors
-      '''
+    '''
     def calculateDistance(self, x1, x2):
         if self.distance_type == "Euclidean":
             d = np.sqrt(np.sum(np.power(x1 - x2, 2), axis=1))
@@ -308,7 +308,7 @@ class DBSCAN:
       Input:  train_data      dataType: ndarray   description: features
       Output: centers         dataType: ndarray   description: cluster centers
               distances       dataType: ndarray   description: distance between sample and its corresponding cluster(cluster, distance)
-      '''
+    '''
     def train(self, train_data, display="True"):
         # if self.norm_type == "Standardization":
         #     train_data = preProcess.Standardization(train_data)
@@ -361,7 +361,7 @@ class DBSCAN:
          Description: get initial cluster centers
          Input:  train_data      dataType: ndarray      description: training set
          Output: neighbor        dataType: dict         description: cluster and its neighbor (center, neighbor)
-         '''
+    '''
     def getCenters(self, train_data):
         neighbor = {}
         for i in range(len(train_data)):
@@ -384,8 +384,7 @@ class DBSCAN:
         Function:  save
         Description: save the model as pkl
         Input:  filename    dataType: str   description: the path to save model
-        '''
-
+    '''
     def save(self, filename):
         f = open(filename, 'w')
         model = {'label': self.label, 'neighbor': self.neighbor}
@@ -398,7 +397,6 @@ class DBSCAN:
     Input:  filename    dataType: str   description: the path to save model
     Output: self        dataType: obj   description: the trained model
     '''
-
     def load(self, filename):
         f = open(filename)
         model = pickle.load(f)
