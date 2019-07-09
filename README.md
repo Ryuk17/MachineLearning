@@ -8,9 +8,10 @@ Machine learning algorithm written by myself with Python 3.6
 4. [LR](https://github.com/DandelionLau/MachineLearning/blob/master/LogisticRegression.py)
 6. [Perceptron](https://github.com/DandelionLau/MachineLearning/blob/master/Perceptron.py)
 7. [DecisionTree](https://github.com/DandelionLau/MachineLearning/blob/master/Tree.py)
-8. [AdaBoost](https://github.com/DandelionLau/MachineLearning/tree/master/AdaBoost.py)
-9. [Blending](https://github.com/DandelionLau/MachineLearning/blob/master/Blending.py)
-10. [Stacking](https://github.com/DandelionLau/MachineLearning/blob/master/Stacking.py)
+8. [RandomForest](https://github.com/DandelionLau/MachineLearning/blob/master/RandomForest.py)
+9. [AdaBoost](https://github.com/DandelionLau/MachineLearning/tree/master/AdaBoost.py)
+10. [Blending](https://github.com/DandelionLau/MachineLearning/blob/master/Blending.py)
+11. [Stacking](https://github.com/DandelionLau/MachineLearning/blob/master/Stacking.py)
 
 +  **Regression**
 1. [LinearRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)
@@ -18,13 +19,14 @@ Machine learning algorithm written by myself with Python 3.6
 3. [RidgeRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)
 4. [LassoRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)  
 5. [StepWiseRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)
-2. [TreeRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Tree.py)
+6. [TreeRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Tree.py)
+7. [RandomForest](https://github.com/DandelionLau/MachineLearning/blob/master/RandomForest.py)
 
 + **Cluster**
 1. [KMeans](https://github.com/DandelionLau/MachineLearning/blob/master/Cluster.py)
 2. [KMeans++](https://github.com/DandelionLau/MachineLearning/blob/master/Cluster.py)
 3. [BiKmeans](https://github.com/DandelionLau/MachineLearning/blob/master/Cluster.py)
-2. [DBSCAN](https://github.com/DandelionLau/MachineLearning/blob/master/Cluster.py)
+4. [DBSCAN](https://github.com/DandelionLau/MachineLearning/blob/master/Cluster.py)
 
 + **Association Analysis**
 1. [Apriori](https://github.com/DandelionLau/MachineLearning/blob/master/AssociationAnalysis.py)
