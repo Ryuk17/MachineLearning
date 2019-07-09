@@ -5,7 +5,7 @@ Machine learning algorithms written by myself with Python 3.6
 1. [KNN](https://github.com/DandelionLau/MachineLearning/blob/master/KNN.py)
 2. [NaiveBayes](https://github.com/DandelionLau/MachineLearning/blob/master/NaiveBayes.py)
 3. [SVM](https://github.com/DandelionLau/MachineLearning/blob/master/SVM.py)
-4. [LR](https://github.com/DandelionLau/MachineLearning/blob/master/LogisticRegression.py)
+4. [LogisticRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LogisticRegression.py)
 6. [Perceptron](https://github.com/DandelionLau/MachineLearning/blob/master/Perceptron.py)
 7. [DecisionTree](https://github.com/DandelionLau/MachineLearning/blob/master/Tree.py)
 8. [RandomForest](https://github.com/DandelionLau/MachineLearning/blob/master/RandomForest.py)
