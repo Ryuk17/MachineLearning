@@ -12,9 +12,9 @@ from DecisionTree import DecisionTreeClassifier
 from TreeRegression import RegressionTree
 
 class RandomForestClassifier:
-    def __init__(self, n, alpha=1e-5):
+    def __init__(self, tree_num=10, alpha=1e-5):
         self.sample_num = 0
-        self.tree_num = n
+        self.tree_num = tree_num
         self.alpha=alpha
         self.trees = []
         self.prediction = None
@@ -67,7 +67,7 @@ class RandomForestClassifier:
 
     def predict(self, test_data):
         labels = np.zeros([len(test_data), self.tree_num])
-        for i in range(len(self.tree_num)):
+        for i in range(self.tree_num):
             labels[:,i] = self.trees[i].predict(test_data)
 
         prediction = np.zeros([len(test_data)])
@@ -114,9 +114,9 @@ class RandomForestClassifier:
 
 
 class RandomForestRegression:
-    def __init__(self, n, error_threshold=1,  N=4, alpha=0.01):
+    def __init__(self, tree_num=10, error_threshold=1,  N=4, alpha=0.01):
         self.sample_num = 0
-        self.tree_num = n
+        self.tree_num = tree_num
         self.trees = []
         self.error_threshold = error_threshold  # the threshold of error
         self.N = N                              # the least number of sample for split
@@ -171,7 +171,7 @@ class RandomForestRegression:
 
     def predict(self, test_data):
         labels = np.zeros([len(test_data), self.tree_num])
-        for i in range(len(self.tree_num)):
+        for i in range(self.tree_num):
             labels[:,i] = self.trees[i].predict(test_data)
 
         prediction = np.mean(labels, axis=0)
