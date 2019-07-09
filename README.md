@@ -1,5 +1,5 @@
 # MachineLearning
-Machine learning algorithm written by myself with Python 3.6
+Machine learning algorithms written by myself with Python 3.6
 ## What's in it?
 + **Classification**
 1. [KNN](https://github.com/DandelionLau/MachineLearning/blob/master/KNN.py)
@@ -39,8 +39,6 @@ Machine learning algorithm written by myself with Python 3.6
 
 + **Tagging**
 1. [HMM](https://github.com/DandelionLau/MachineLearning/blob/master/HMM.py)
-
-
 
 ## Tutorials
 中文教程: [从零实现机器学习算法](https://zhuanlan.zhihu.com/p/67835251)  
