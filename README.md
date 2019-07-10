@@ -1,5 +1,6 @@
 # MachineLearning
 Machine learning algorithms written by myself with Python 3.6
+
 ## What's in it?
 + **Classification**
 1. [AdaBoost](https://github.com/DandelionLau/MachineLearning/tree/master/AdaBoost.py)
@@ -14,29 +15,29 @@ Machine learning algorithms written by myself with Python 3.6
 10. [SVM](https://github.com/DandelionLau/MachineLearning/blob/master/SVM.py)
 
 +  **Regression**
-1. [LinearRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)
-2. [LocallyWeightedLinearRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)
-3. [RidgeRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)
+1. [GBDT](https://github.com/DandelionLau/MachineLearning/blob/master/GradientBoostingDecisionTree.py)
+2. [LinearRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)
+3. [LocallyWeightedLinearRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)
 4. [LassoRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)  
-5. [StepWiseRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)
-6. [TreeRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Tree.py)
-7. [RandomForest](https://github.com/DandelionLau/MachineLearning/blob/master/RandomForest.py)
-8. [GBDT]()
+5. [RandomForest](https://github.com/DandelionLau/MachineLearning/blob/master/RandomForest.py)
+6. [RidgeRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)
+7. [StepWiseRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)
+8. [TreeRegression](https://github.com/DandelionLau/MachineLearning/blob/master/Tree.py)
 
 + **Cluster**
-1. [KMeans](https://github.com/DandelionLau/MachineLearning/blob/master/Cluster.py)
-2. [KMeans++](https://github.com/DandelionLau/MachineLearning/blob/master/Cluster.py)
-3. [BiKmeans](https://github.com/DandelionLau/MachineLearning/blob/master/Cluster.py)
-4. [DBSCAN](https://github.com/DandelionLau/MachineLearning/blob/master/Cluster.py)
+1. [BiKmeans](https://github.com/DandelionLau/MachineLearning/blob/master/Cluster.py)
+2. [DBSCAN](https://github.com/DandelionLau/MachineLearning/blob/master/Cluster.py)
+3. [KMeans](https://github.com/DandelionLau/MachineLearning/blob/master/Cluster.py)
+4. [KMeans++](https://github.com/DandelionLau/MachineLearning/blob/master/Cluster.py)
 
 + **Association Analysis**
 1. [Apriori](https://github.com/DandelionLau/MachineLearning/blob/master/AssociationAnalysis.py)
-2. [FP-growth](https://github.com/DandelionLau/MachineLearning/blob/master/AssociationAnalysis.py)
-3. [Eclat](https://github.com/DandelionLau/MachineLearning/blob/master/AssociationAnalysis.py)
+2. [Eclat](https://github.com/DandelionLau/MachineLearning/blob/master/AssociationAnalysis.py)
+3. [FP-growth](https://github.com/DandelionLau/MachineLearning/blob/master/AssociationAnalysis.py)
 
 + **Dimensionality Reduction**
-1. [PCA](https://github.com/DandelionLau/MachineLearning/blob/master/DimensionReduction.py)
-2. [LDA](https://github.com/DandelionLau/MachineLearning/blob/master/DimensionReduction.py)
+1. [LDA](https://github.com/DandelionLau/MachineLearning/blob/master/DimensionReduction.py)
+2. [PCA](https://github.com/DandelionLau/MachineLearning/blob/master/DimensionReduction.py)
 
 + **Tagging**
 1. [HMM](https://github.com/DandelionLau/MachineLearning/blob/master/HMM.py)
