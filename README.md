@@ -49,8 +49,7 @@ English Turorials: [Step-by-Step Guide To Implement Machine Learning](https://ww
 ## Main References
 1. [CS229:Machine Learning](http://cs229.stanford.edu/)
 2. [Machine Learning IN ACTION](https://www.manning.com/books/machine-learning-in-action)
-3. [KAGGLE ENSEMBLING GUIDE](https://mlwave.com/kaggle-ensembling-guide/)
-4. [统计学习方法](https://baike.baidu.com/item/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/10430179)
+3. [统计学习方法](https://baike.baidu.com/item/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/10430179)
 
 ## Dependences
 1. Install [Python 3.6](https://www.python.org/)
