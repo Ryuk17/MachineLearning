@@ -2,16 +2,16 @@
 Machine learning algorithms written by myself with Python 3.6
 ## What's in it?
 + **Classification**
-1. [KNN](https://github.com/DandelionLau/MachineLearning/blob/master/KNN.py)
-2. [NaiveBayes](https://github.com/DandelionLau/MachineLearning/blob/master/NaiveBayes.py)
-3. [SVM](https://github.com/DandelionLau/MachineLearning/blob/master/SVM.py)
-4. [LogisticRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LogisticRegression.py)
-6. [Perceptron](https://github.com/DandelionLau/MachineLearning/blob/master/Perceptron.py)
-7. [DecisionTree](https://github.com/DandelionLau/MachineLearning/blob/master/Tree.py)
+1. [AdaBoost](https://github.com/DandelionLau/MachineLearning/tree/master/AdaBoost.py)
+2. [Blending](https://github.com/DandelionLau/MachineLearning/blob/master/Blending.py)
+3. [DecisionTree](https://github.com/DandelionLau/MachineLearning/blob/master/Tree.py)
+4. [KNN](https://github.com/DandelionLau/MachineLearning/blob/master/KNN.py)
+5. [LogisticRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LogisticRegression.py)
+6. [NaiveBayes](https://github.com/DandelionLau/MachineLearning/blob/master/NaiveBayes.py)
+7. [Perceptron](https://github.com/DandelionLau/MachineLearning/blob/master/Perceptron.py)
 8. [RandomForest](https://github.com/DandelionLau/MachineLearning/blob/master/RandomForest.py)
-9. [AdaBoost](https://github.com/DandelionLau/MachineLearning/tree/master/AdaBoost.py)
-10. [Blending](https://github.com/DandelionLau/MachineLearning/blob/master/Blending.py)
-11. [Stacking](https://github.com/DandelionLau/MachineLearning/blob/master/Stacking.py)
+9. [Stacking](https://github.com/DandelionLau/MachineLearning/blob/master/Stacking.py)
+10. [SVM](https://github.com/DandelionLau/MachineLearning/blob/master/SVM.py)
 
 +  **Regression**
 1. [LinearRegression](https://github.com/DandelionLau/MachineLearning/blob/master/LinearRegression.py)
