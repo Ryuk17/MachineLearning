@@ -64,7 +64,12 @@ class RandomForestClassifier:
         pred = predition[0][0]
         return pred
 
-
+    '''
+     Function:  predict
+     Description: predict the testing set 
+     Input:  test_data       dataType: ndarray   description: features
+     Output: prediction       dataType: ndarray   description: the prediction results for testing set
+     '''
     def predict(self, test_data):
         labels = np.zeros([len(test_data), self.tree_num])
         for i in range(self.tree_num):
@@ -168,7 +173,12 @@ class RandomForestRegression:
         pred = predition[0][0]
         return pred
 
-
+    '''
+     Function:  predict
+     Description: predict the testing set 
+     Input:  test_data        dataType: ndarray   description: features
+     Output: prediction       dataType: ndarray   description: the prediction results for testing set
+     '''
     def predict(self, test_data):
         labels = np.zeros([len(test_data), self.tree_num])
         for i in range(self.tree_num):
