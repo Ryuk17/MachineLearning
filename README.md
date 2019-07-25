@@ -43,7 +43,7 @@ Machine learning algorithms written by myself with Python 3.6
 + **Tagging**
 1. [HMM](https://github.com/DandelionLau/MachineLearning/blob/master/HMM.py)
 
-**Ohters**
++ **Ohters**
 
 ## Tutorials
 中文教程: [从零实现机器学习算法](https://blog.csdn.net/sinat_35821976/column/info/24794)  
