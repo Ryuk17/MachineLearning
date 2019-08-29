@@ -1,5 +1,5 @@
 # MachineLearning
-Machine learning algorithms written by myself with Python 3.6
+Machine learning algorithms implemented by myself with Python 3.6
 
 ## What's in it?
 + **Classification**
