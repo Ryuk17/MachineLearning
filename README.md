@@ -1,4 +1,5 @@
 # MachineLearning
+[![GPL-3.0 Licensed](https://img.shields.io/crates/l/rustc-serialize)](https://opensource.org/licenses/GPL-3.0) [![Python Version](https://img.shields.io/badge/Python-3.x-blue.svg)](https://www.python.org/)  
 Machine learning algorithms implemented by myself with Python 3.6
 
 ## What's in it?
