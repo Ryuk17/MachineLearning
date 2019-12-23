@@ -45,6 +45,7 @@ Machine learning algorithms implemented by myself with Python 3.6
 1. [HMM](https://github.com/DandelionLau/MachineLearning/blob/master/HMM.py)
 
 + **Ohters**
+[FM]
 
 ## Tutorials
 中文教程: [从零实现机器学习算法](https://blog.csdn.net/sinat_35821976/category_9276758.html)  
