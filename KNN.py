@@ -1,6 +1,6 @@
 """
 @Filename:       KNN.py
-@Author:         Danc1elion
+@Author:         Ryuk
 @Create Date:    2019-04-29
 @Update Date:    2019-05-03
 @Description:    Implement of KNN
