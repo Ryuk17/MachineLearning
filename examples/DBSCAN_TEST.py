@@ -1,17 +1,9 @@
 """
 @ Filename:       DBSCAN_TEST.py
-@ Author:         Danc1elion
+@ Author:         Ryuk
 @ Create Date:    2019-05-20   
 @ Update Date:    2019-05-20 
 @ Description:    Implement DBSCAN_TEST
-"""
-
-"""
-@ Filename:       KMeans_TEST.py
-@ Author:         Danc1elion
-@ Create Date:    2019-05-16   
-@ Update Date:    2019-05-17
-@ Description:    Implement KMeans_TEST
 """
 
 from Cluster import KMeans as kmeans

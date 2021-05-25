@@ -1,4 +1,11 @@
-from AdaptiveBoost import *
+"""
+@ Filename:       AadBoost_TEST.py
+@ Author:         Ryuk
+@ Create Date:    2019-05-28
+@ Update Date:    2019-05-31
+@ Description:    Implement AdaBoost_TEST
+"""
+from AdaBoost import *
 from SVM import *
 import numpy as np
 import pandas as pd

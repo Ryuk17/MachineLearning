@@ -1,6 +1,6 @@
 """
 @ Filename:       RandomForest.py
-@ Author:         Danc1elion
+@ Author:         Ryuk
 @ Create Date:    2019-07-09   
 @ Update Date:    2019-07-09 
 @ Description:    Implement RandomForest

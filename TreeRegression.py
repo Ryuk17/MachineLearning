@@ -1,6 +1,6 @@
 """
 @ Filename:       TreeRegression.py
-@ Author:         Danc1elion
+@ Author:         Ryuk
 @ Create Date:    2019-05-11
 @ Update Date:    2019-05-13
 @ Description:    Implement TreeRegression

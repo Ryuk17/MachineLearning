@@ -1,3 +1,10 @@
+"""
+@ Filename:       KNN_TEST.py
+@ Author:         Ryuk
+@ Create Date:    2019-05-16
+@ Update Date:    2019-05-28
+@ Description:    Implement KNN
+"""
 from sklearn.neighbors import KNeighborsClassifier
 from KNN import *
 import numpy as np

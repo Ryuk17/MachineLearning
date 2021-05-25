@@ -1,3 +1,11 @@
+"""
+@ Filename:       SVM_TEST.py
+@ Author:         Ryuk
+@ Create Date:    2019-05-05
+@ Update Date:    2019-05-05
+@ Description:    Test SVM
+"""
+
 from sklearn.svm import SVC
 from SVM import *
 import numpy as np

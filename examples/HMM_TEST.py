@@ -1,6 +1,6 @@
 """
 @ Filename:       HMM_TEST.py
-@ Author:         Danc1elion
+@ Author:         Ryuk
 @ Create Date:    2019-06-12   
 @ Update Date:    2019-06-16
 @ Description:    Implement HMM_TEST

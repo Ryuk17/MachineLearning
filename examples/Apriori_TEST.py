@@ -1,6 +1,6 @@
 """
 @ Filename:       Apriori_TEST.py
-@ Author:         Danc1elion
+@ Author:         Ryuk
 @ Create Date:    2019-05-28   
 @ Update Date:    2019-05-31 
 @ Description:    Implement Apriori_TEST

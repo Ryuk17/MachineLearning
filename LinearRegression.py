@@ -1,6 +1,6 @@
 """
 @ Filename:       Regression.py
-@ Author:         Danc1elion
+@ Author:         Ryuk
 @ Create Date:    2019-05-05
 @ Update Date:    2019-05-06
 @ Description:    Implement linear regression

@@ -1,3 +1,11 @@
+"""
+@ Filename:       Perceptron_TEST.py
+@ Author:         Ryuk
+@ Create Date:    2019-05-05
+@ Update Date:    2019-05-05
+@ Description:    Test Perceptron
+"""
+
 from sklearn.neural_network import MLPClassifier
 from Perceptron import *
 import numpy as np

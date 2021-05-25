@@ -1,6 +1,6 @@
 """
 @ Filename:       RandomForest_TEST.py
-@ Author:         Danc1elion
+@ Author:         Ryuk
 @ Create Date:    2019-07-10   
 @ Update Date:    2019-07-10 
 @ Description:    Implement RandomForest_TEST

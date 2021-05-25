@@ -1,5 +1,5 @@
 from sklearn.linear_model import LogisticRegression
-from Logistic import *
+from LogisticRegression import *
 import numpy as np
 import pandas as pd
 import time

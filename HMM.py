@@ -1,6 +1,6 @@
 """
 @ Filename:       HMM.py
-@ Author:         Danc1elion
+@ Author:         Ryuk
 @ Create Date:    2019-06-06   
 @ Update Date:    2019-06-16
 @ Description:    Implement HMM

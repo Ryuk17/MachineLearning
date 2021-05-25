@@ -1,6 +1,6 @@
 """
 @Filename:       Perceptron.py
-@Author:         Danc1elion
+@Author:         Ryuk
 @Create Date:    2019-04-30
 @Update Date:    2019-05-03
 @Description:    Implement of perceptron.py

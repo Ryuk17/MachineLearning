@@ -1,6 +1,6 @@
 """
 @ Filename:       KMeans_TEST.py
-@ Author:         Danc1elion
+@ Author:         Ryuk
 @ Create Date:    2019-05-16   
 @ Update Date:    2019-05-28
 @ Description:    Implement KMeans_TEST

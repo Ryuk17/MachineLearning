@@ -1,6 +1,6 @@
 """
 @ Filename:       AssociationAnalysis.py
-@ Author:         Danc1elion
+@ Author:         Ryuk
 @ Create Date:    2019-05-27   
 @ Update Date:    2019-06-02
 @ Description:    Implement AssociationAnalysis

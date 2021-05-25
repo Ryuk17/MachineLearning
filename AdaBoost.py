@@ -1,6 +1,6 @@
 """
 @Filename:       AdaptiveBoost.py
-@Author:         Danc1elion
+@Author:         Ryuk
 @Create Date:    2019-05-03
 @Update Date:    2019-05-24
 @Description:    Implement of Adaptive Boosting

@@ -1,6 +1,6 @@
 """
 @ Filename:       FP_growth_TEST.py
-@ Author:         Danc1elion
+@ Author:         Ryuk
 @ Create Date:    2019-05-30   
 @ Update Date:    2019-05-31 
 @ Description:    Implement FP_growth_TEST

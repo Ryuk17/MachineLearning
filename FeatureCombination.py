@@ -1,23 +1,25 @@
 """
-@Filename:       LogisticRegression.py
-@Author:         Ryuk
-@Create Date:    2019-04-30
-@Update Date:    2019-05-03
-@Description:    Implement of logistic regression
+@ Filename:      FeatureCombination.py
+@ Author:         Ryuk
+@ Create Date:    2019-11-18
+@ Update Date:    2019-11-20
+@ Description:    Implement FM
 """
 
 import numpy as np
 import preProcess
 import pickle
-import random
 
-
-class LogisticRegressionClassifier:
-    def __init__(self,norm_type="Normalization"):
+class FM:
+    def __init__(self, n, norm_type="Standardization", k=5):
         self.norm_type = norm_type
-        self.weights = None
-        self.prediction = None
-        self.probability = None
+        self.n = n                                      # the number of feature
+        self.k = k                                      # the dimension of latency
+        self.w_0 = 0                                    # numerical parameter
+        self.W = np.random.random([self.n, 1])          # one order parameter
+        self.V = np.random.random([self.n, self.k])     # second order parameter
+        self.sample_num = None                          # the number of samples of trainset
+
     '''
        Function:  sigmoid
        Description: sigmoid function
@@ -31,67 +33,51 @@ class LogisticRegressionClassifier:
             output = output * (1 - output)
         return output
 
-    '''
-       Function:  updataAlpha
-       Description: updata Alpha in each sample
-       Input: alpha       dataType: float     description: original alpha
-              method      dataTpye: int       description: update method of alpha
-       Output: output     dataType: float     description: output
-       '''
-    def updataAlpha(self, alpha, epoch, method=1):
-        if method == 1:
-            alpha = 0.95 ** epoch * alpha
-        elif method == 2:
-            k = 3
-            alpha = k/(epoch ** 0.5) * alpha
-        elif method == 3:
-            decay_rate = 0.001
-            alpha = alpha / (1 + decay_rate * epoch)
-        return alpha
 
     '''
        Function:  train
        Description: train the model
        Input:  train_data       dataType: ndarray   description: features
                train_label      dataType: ndarray   description: labels
-               method           dataType: string    description: "GA":Gradient Ascent; "SGA": Stochastic Gradient Ascent
                alpha            dataType: float     description: the stride of the target
                iterations       dataType: int       description: the times of iteration
        Output: self             dataType: obj       description: the trained model
        '''
-    def train(self, train_data, train_label, method="GA", alpha=0.1, iterations=100):
+    def train(self, train_data, train_label, alpha=0.01, iterations=100):
         if self.norm_type == "Standardization":
             train_data = preProcess.Standardization(train_data)
         else:
             train_data = preProcess.Normalization(train_data)
 
-        train_label = np.expand_dims(train_label, axis=1)
-        feature_dim = len(train_data[1])
+        for epoch in range(iterations):
+            for id in range(self.sample_num):
 
+                # second order computation
+                inter_1 = train_data[id] * self.V
+                inter_2 = np.multiply(train_data[id], train_data[id]) * np.multiply(self.V, self.V)
+                interaction = np.sum(np.multiply(inter_1, inter_1) - inter_2) / 2.
 
-        if method == "GA":
-            weights = np.random.normal(0, 1, [feature_dim, 1])
-            for i in range(iterations):
-                pred = self.sigmoid(np.dot(train_data, weights))
-                errors = train_label - pred
-                # update the weights
-                weights = weights + alpha * np.dot(train_data.T, errors)
-            self.weights = weights
-            return self
+                # prediction result
+                pred = self.w_0 + train_data[id] * self.W + interaction
 
-        if method == "SGA":
-            weights = np.random.normal(0, 1, feature_dim)
-            sample_num = len(train_data)
-            random_index = np.random.randint(sample_num, size=sample_num)
-            for i in range(iterations):
-                for j in range(sample_num):
-                    alpha = self.updataAlpha(alpha, i, 1)
-                    pred = self.sigmoid(np.dot(train_data[random_index[j], :], weights))
-                    sample_error = train_label[random_index[j]] - pred
-                    weights = weights + alpha * sample_error * train_data[random_index[j], :]
+                # calculate loss, cross entropy
+                base = [np.log(self.sigmoid(train_label[id] * float(pred))) - 1] * train_label
 
-            self.weights = weights
-            return self
+                # update numerical parameters
+                self.w_0 -= alpha * base
+
+                x = train_data[id]
+                for i in range(self.n):
+                    # update first-order parameter
+                    if train_data[id, i] != 0:
+                        self.W[id, i] -= alpha * base  * train_data[id, i]
+                        for j in range(self.n):
+                            # update second-order parameter
+                            self.V[i, j] -= alpha * base * (
+                                    train_data[id, i] * self.V[j, i] * train_data[id, j] - self.V[i, j] * train_data[id, i] * train_data[id, i])
+
+        return self
+
 
     '''
        Function:  predict
@@ -111,7 +97,13 @@ class LogisticRegressionClassifier:
         prediction = np.zeros([test_num, 1])
         probability = np.zeros([test_num, 1])
         for i in range(test_num):
-            probability[i] = self.sigmoid(np.dot(test_data[i, :], self.weights))
+
+            inter_1 = test_data[i] * self.V
+            inter_2 = np.multiply(test_data[i], test_data[i]) * np.multiply(self.V, self.V)
+            interaction = sum(np.multiply(inter_1, inter_1) - inter_2) / 2.
+            pre = self.w_0 + test_data[i] * self.W + interaction
+            probability = self.sigmoid(float(pre))
+
             if probability[i] > 0.5:
                 prediction[i] = 1
             else:
@@ -123,6 +115,7 @@ class LogisticRegressionClassifier:
             return probability
         else:
             return prediction
+
 
     '''
     Function:  accuracy

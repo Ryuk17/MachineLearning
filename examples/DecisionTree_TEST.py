@@ -1,3 +1,10 @@
+"""
+@ Filename:       DecisionTree_TEST.py
+@ Author:         Ryuk
+@ Create Date:    2019-05-16
+@ Update Date:    2019-05-28
+@ Description:    Implement DecisionTree_Test
+"""
 from sklearn import tree
 from DecisionTree import *
 import numpy as np

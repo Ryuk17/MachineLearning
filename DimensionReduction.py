@@ -1,6 +1,6 @@
 """
 @ Filename:       DimensionReduction.py
-@ Author:         Danc1elion
+@ Author:         Ryuk
 @ Create Date:    2019-06-02   
 @ Update Date:    2019-06-06
 @ Description:    Implement DimensionReduction
