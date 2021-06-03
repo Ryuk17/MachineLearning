@@ -6,7 +6,6 @@
 @ Description:    Implement HMM
 """
 import numpy as np
-import preProcess
 import pickle
 
 class HiddenMarkovModel:
