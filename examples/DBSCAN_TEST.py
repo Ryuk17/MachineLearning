@@ -9,8 +9,7 @@
 from Cluster import KMeans as kmeans
 from Cluster import DBSCAN as dbscan
 from sklearn.cluster import DBSCAN
-import numpy as np
-import pandas as pd
+
 import time
 import matplotlib.pyplot as plt
 from sklearn import datasets
