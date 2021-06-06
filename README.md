@@ -31,7 +31,7 @@ Machine learning algorithms implemented by myself with Python 3.6
 2. [DBSCAN](https://github.com/DandelionLau/MachineLearning/blob/master/Cluster.py)
 3. [KMeans](https://github.com/DandelionLau/MachineLearning/blob/master/Cluster.py)
 4. [KMeans++](https://github.com/DandelionLau/MachineLearning/blob/master/Cluster.py)
-5. 4. [GMM](https://github.com/Ryuk17/MachineLearning/blob/master/GMM.py)
+5. [GMM](https://github.com/Ryuk17/MachineLearning/blob/master/GMM.py)
 
 + **Association Analysis**
 1. [Apriori](https://github.com/DandelionLau/MachineLearning/blob/master/AssociationAnalysis.py)
